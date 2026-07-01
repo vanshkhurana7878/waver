@@ -1,6 +1,7 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+const nodemailer = require("nodemailer");
 
 dotenv.config();
 
@@ -13,14 +14,65 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
+// -------------------- PAGES --------------------
+
 app.get("/", (req, res) => {
     res.render("index");
 });
 
-
 app.get("/login", (req, res) => {
     res.render("login");
 });
+
+// -------------------- OTP STORAGE --------------------
+let storedOTP = null;
+let userEmail = null;
+
+// -------------------- SEND EMAIL OTP --------------------
+app.post("/send-email-otp", async (req, res) => {
+    const email = req.body.email;
+
+    if (!email) return res.send("Email required");
+
+    userEmail = email;
+
+    storedOTP = Math.floor(100000 + Math.random() * 900000);
+
+    try {
+        let transporter = nodemailer.createTransport({
+            service: "gmail",
+            auth: {
+                user: process.env.EMAIL,       // your gmail
+                pass: process.env.PASSWORD      // app password
+            }
+        });
+
+        await transporter.sendMail({
+            from: `"Waver" <${process.env.EMAIL}>`,
+            to: email,
+            subject: "Your OTP Code",
+            text: `Your OTP is: ${storedOTP}`
+        });
+
+        res.send("OTP sent to email 📩");
+    } catch (error) {
+        console.log(error);
+        res.send("Error sending OTP");
+    }
+});
+
+// -------------------- VERIFY OTP --------------------
+app.post("/verify-email-otp", (req, res) => {
+    const otp = req.body.otp;
+
+    if (otp == storedOTP) {
+        res.send("Login Success 🎉");
+    } else {
+        res.send("Invalid OTP ❌");
+    }
+});
+
+// -------------------- START SERVER --------------------
 
 const PORT = process.env.PORT || 3000;
 

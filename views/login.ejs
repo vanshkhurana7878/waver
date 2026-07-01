@@ -61,10 +61,10 @@
 
     <!-- LOGIN BOX -->
     <div class="login-box">
-        <h1>Login with OTP</h1>
+        <h1>Login with Email OTP</h1>
 
-        <!-- PHONE INPUT -->
-        <input type="text" id="phone" placeholder="+91XXXXXXXXXX">
+        <!-- EMAIL INPUT -->
+        <input type="email" id="email" placeholder="Enter Email">
 
         <button onclick="sendOTP()">Send OTP</button>
 
@@ -72,57 +72,51 @@
         <input type="text" id="otp" placeholder="Enter OTP">
 
         <button onclick="verifyOTP()">Verify OTP</button>
-
-        <!-- Recaptcha -->
-        <div id="recaptcha-container"></div>
     </div>
 
-    <!-- FIREBASE OTP SCRIPT -->
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-app.js";
-        import { getAuth, signInWithPhoneNumber, RecaptchaVerifier } from "https://www.gstatic.com/firebasejs/10.12.5/firebase-auth.js";
+    <!-- EMAIL OTP SCRIPT -->
+    <script>
+        // SEND OTP
+        async function sendOTP() {
+            let email = document.getElementById("email").value;
 
-        // 🔥 YOUR FIREBASE CONFIG (fill this)
-        const firebaseConfig = {
-            apiKey: "AIzaSyCwW5b1ZDxX8Dr-D60ZtwXwVaqJe_XJRTU",
-            authDomain: "onlineattendence-b2a61.firebaseapp.com",
-            projectId: "onlineattendence-b2a61",
-            appId: "1:954168844446:web:be6a365a8e15c2a85cdb8f",
-        };
+            if (!email) {
+                alert("Please enter email");
+                return;
+            }
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+            await fetch("/send-email-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ email })
+            });
 
-        // Recaptcha
-        window.recaptchaVerifier = new RecaptchaVerifier(auth, "recaptcha-container", {
-            size: "normal"
-        });
+            alert("OTP Sent to Email 📩");
+        }
 
-        let confirmationResult;
+        // VERIFY OTP
+        async function verifyOTP() {
+            let otp = document.getElementById("otp").value;
 
-        // STEP 6: SEND OTP
-        window.sendOTP = async () => {
-            const phone = document.getElementById("phone").value;
+            if (!otp) {
+                alert("Please enter OTP");
+                return;
+            }
 
-            confirmationResult = await signInWithPhoneNumber(
-                auth,
-                phone,
-                window.recaptchaVerifier
-            );
+            let res = await fetch("/verify-email-otp", {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ otp })
+            });
 
-            alert("OTP Sent 📲");
-        };
+            let data = await res.text();
 
-        // STEP 7: VERIFY OTP
-        window.verifyOTP = async () => {
-            const code = document.getElementById("otp").value;
+            alert(data);
 
-            await confirmationResult.confirm(code);
-
-            alert("Login Successful 🎉");
-
-            window.location.href = "/";
-        };
+            if (data.includes("Success")) {
+                window.location.href = "/";
+            }
+        }
     </script>
 
 </body>
