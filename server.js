@@ -46,7 +46,7 @@ app.post("/send-email-otp", async (req, res) => {
 
     try {
         let transporter = nodemailer.createTransport({
-            host: "smtp.gmail.com",
+            host: process.env.SMTP_HOST,
             port: 587,
             secure: false,
             family: 4,
