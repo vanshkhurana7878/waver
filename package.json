@@ -22,7 +22,8 @@
     "mongoose": "^9.7.3",
     "node": "^26.4.0",
     "nodemailer": "^9.0.3",
-    "otp-generator": "^4.0.1"
+    "otp-generator": "^4.0.1",
+    "resend": "^6.16.0"
   },
   "devDependencies": {
     "nodemon": "^3.1.14"
