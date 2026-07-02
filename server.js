@@ -50,7 +50,7 @@ app.post("/send-email-otp", async (req, res) => {
     try {
 
         await resend.emails.send({
-            from: "Waver <onboarding@resend.dev>",
+            from: "Waver <noreply@waver.co.in>",
             to: email,
             subject: "Your OTP Code",
             html: `
