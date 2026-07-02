@@ -25,43 +25,53 @@ app.get("/login", (req, res) => {
 });
 
 // -------------------- OTP STORAGE --------------------
+
 let storedOTP = null;
 let userEmail = null;
 
 // -------------------- SEND EMAIL OTP --------------------
+
 app.post("/send-email-otp", async (req, res) => {
     const email = req.body.email;
 
-    if (!email) return res.send("Email required");
+    if (!email) {
+        return res.send("Email required");
+    }
 
     userEmail = email;
 
     storedOTP = Math.floor(100000 + Math.random() * 900000);
 
+    console.log("Generated OTP:", storedOTP);
+
     try {
         let transporter = nodemailer.createTransport({
             service: "gmail",
             auth: {
-                user: process.env.EMAIL,       // your gmail
-                pass: process.env.PASSWORD      // app password
+                user: process.env.EMAIL_USER,
+                pass: process.env.EMAIL_PASS
             }
         });
-        console.log("Generated OTP:", otp);
-        await transporter.sendMail({
-            from: `"Waver" <${process.env.EMAIL}>`,
+
+        let info = await transporter.sendMail({
+            from: `"Waver" <${process.env.EMAIL_USER}>`,
             to: email,
             subject: "Your OTP Code",
             text: `Your OTP is: ${storedOTP}`
         });
 
+        console.log("Email Sent:", info.response);
+
         res.send("OTP sent to email 📩");
+
     } catch (error) {
-        console.log(error);
+        console.log("Email Error:", error);
         res.send("Error sending OTP");
     }
 });
 
 // -------------------- VERIFY OTP --------------------
+
 app.post("/verify-email-otp", (req, res) => {
     const otp = req.body.otp;
 
