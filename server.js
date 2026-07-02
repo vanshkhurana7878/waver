@@ -49,6 +49,7 @@ app.post("/send-email-otp", async (req, res) => {
             host: process.env.SMTP_HOST,
             port: 465,
             secure: true,
+            family: 4,
             auth: {
                 user: process.env.EMAIL_USER,
                 pass: process.env.EMAIL_PASS
