@@ -46,7 +46,7 @@ app.post("/send-email-otp", async (req, res) => {
                 pass: process.env.PASSWORD      // app password
             }
         });
-
+        console.log("Generated OTP:", otp);
         await transporter.sendMail({
             from: `"Waver" <${process.env.EMAIL}>`,
             to: email,
