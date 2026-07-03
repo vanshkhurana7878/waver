@@ -114,7 +114,8 @@
             alert(data);
 
             if (data.includes("Success")) {
-                window.location.href = "/";
+                window.location.href = data.redirect;} else{
+                    alert("invalid otp");
             }
         }
     </script>
