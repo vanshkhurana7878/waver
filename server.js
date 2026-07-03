@@ -120,7 +120,23 @@ app.get("/test", async (req, res) => {
 
   res.json(data);
 });
+//-----------------Database------------------
+app.get("/barbers", async (req, res) => {
 
+    const { data, error } = await supabase
+        .from("user")
+        .select("*");
+
+    if (error) {
+        console.log(error);
+        return res.send("Error fetching barbers");
+    }
+
+    res.render("barbers", {
+        barbers: data
+    });
+
+});
 // ---------------- SERVER ----------------
 
 const PORT = process.env.PORT || 3000;

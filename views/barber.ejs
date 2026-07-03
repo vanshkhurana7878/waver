@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Choose Your Barber | Waver</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            padding: 20px 40px;
+            border-bottom: 1px solid #333;
+        }
+
+        nav h2 {
+            margin: 0;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 40px 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
+            gap: 25px;
+            padding-bottom: 40px;
+        }
+
+        .card {
+            background: #111;
+            border-radius: 12px;
+            padding: 20px;
+            border: 1px solid #333;
+        }
+
+        .card h2 {
+            margin-bottom: 10px;
+        }
+
+        .card p {
+            color: #ccc;
+            margin: 8px 0;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 15px;
+            border: none;
+            background: white;
+            color: black;
+            font-weight: bold;
+            border-radius: 8px;
+            cursor: pointer;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>WAVER</h2>
+</nav>
+
+<h1>Select Your Barber</h1>
+
+<div class="container">
+
+<% barbers.forEach(barber => { %>
+
+<div class="card">
+
+<h2><%= barber.shop_name %></h2>
+
+<p><b>Owner:</b> <%= barber.owner_name %></p>
+
+<p><b>City:</b> <%= barber.city %></p>
+
+<p><b>Experience:</b> <%= barber.experience %> Years</p>
+
+<p><b>Timing:</b> <%= barber.opening_time %> - <%= barber.closing_time %></p>
+
+<button>Select Barber</button>
+
+</div>
+
+<% }) %>
+
+</div>
+
+</body>
+</html>
