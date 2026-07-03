@@ -129,7 +129,7 @@ app.get("/barbers", async (req, res) => {
 
     if (error) {
         console.log(error);
-        return res.send("Error fetching barber");
+        return res.json(error);
     }
 
     res.render("barber", {
