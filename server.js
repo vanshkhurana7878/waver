@@ -158,6 +158,68 @@ app.get("/barbers", async (req, res) => {
 });
 
 });
+
+// ---------------- BOOKING CREATE ----------------
+
+app.post("/create-booking", async (req, res) => {
+
+    const {
+        barber_id,
+        services,
+        total_price,
+        payment_method
+    } = req.body;
+
+    const parsedServices = JSON.parse(services);
+
+    const { data, error } = await supabase
+        .from("user")
+        .insert([
+            {
+                barber_id,
+                services: parsedServices,
+                total_price,
+                payment_method,
+                status: "pending"
+            }
+        ])
+        .select()
+        .single();
+
+    if (error) {
+        console.log(error);
+        return res.send("Booking failed");
+    }
+
+    res.redirect(`/waiting/${data.id}`);
+});
+//----------------------------Database 3
+app.get("/waiting/:id", async (req, res) => {
+    const { data } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", req.params.id)
+        .single();
+
+    res.render("waiting", { booking: data });
+});
+// ---------------- BOOKING STATUS CHECK ----------------
+
+app.get("/booking-status/:id", async (req, res) => {
+
+    const { data, error } = await supabase
+        .from("user")
+        .select("status")
+        .eq("id", req.params.id)
+        .single();
+
+    if (error) {
+        console.log(error);
+        return res.send("Error fetching status");
+    }
+
+    res.json(data);
+});
 // ---------------- SERVER ----------------
 
 const PORT = process.env.PORT || 3000;
