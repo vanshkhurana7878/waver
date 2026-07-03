@@ -129,10 +129,10 @@ app.get("/barbers", async (req, res) => {
 
     if (error) {
         console.log(error);
-        return res.send("Error fetching barbers");
+        return res.send("Error fetching barber");
     }
 
-    res.render("barbers", {
+    res.render("barber", {
         barbers: data
     });
 
