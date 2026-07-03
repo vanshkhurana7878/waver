@@ -191,7 +191,7 @@ app.post("/create-booking", async (req, res) => {
         return res.send("Booking failed");
     }
 
-    res.redirect(`/waiting/${data.id}`);
+    res.redirect(`/confirmation/${data.id}`);
 });
 //----------------------------Database 3
 app.get("/confirmation/:id", async (req, res) => {
