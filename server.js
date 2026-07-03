@@ -194,14 +194,14 @@ app.post("/create-booking", async (req, res) => {
     res.redirect(`/waiting/${data.id}`);
 });
 //----------------------------Database 3
-app.get("/waiting/:id", async (req, res) => {
+app.get("/confirmation/:id", async (req, res) => {
     const { data } = await supabase
         .from("user")
         .select("*")
         .eq("id", req.params.id)
         .single();
 
-    res.render("waiting", { booking: data });
+    res.render("confirmation", { booking: data });
 });
 // ---------------- BOOKING STATUS CHECK ----------------
 
