@@ -1,10 +1,17 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+
 const { Resend } = require("resend");
 
 dotenv.config();
+console.log("SUPABASE URL:", process.env.SUPABASE_URL);
+const { createClient } = require("@supabase/supabase-js");
 
+const supabase = createClient(
+    process.env.SUPABASE_URL,
+    process.env.SUPABASE_ANON_KEY
+);
 const app = express();
 
 const resend = new Resend(process.env.RESEND_API_KEY);
@@ -93,6 +100,18 @@ app.post("/verify-email-otp", (req, res) => {
 
     }
 
+});
+app.get("/test", async (req, res) => {
+  const { data, error } = await supabase
+    .from("users")
+    .select("*");
+
+  if (error) {
+    console.log(error);
+    return res.send("Supabase Error");
+  }
+
+  res.json(data);
 });
 
 // ---------------- SERVER ----------------
