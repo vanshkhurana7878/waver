@@ -95,12 +95,16 @@ app.post("/verify-email-otp", (req, res) => {
 
         storedOTP = null;
 
-        res.send("Login Success 🎉");
+        return res.json({
+            success: true,
+            redirect: "/service"
+        });
 
     } else {
 
-        res.send("Invalid OTP ❌");
-
+        return res.json({
+            success: false
+        });
     }
 
 });
