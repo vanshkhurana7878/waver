@@ -32,6 +32,9 @@ app.get("/", (req, res) => {
 app.get("/login", (req, res) => {
     res.render("login");
 });
+app.get("/service", (req, res) => {
+    res.render("service");
+});
 
 // ---------------- OTP STORAGE ----------------
 

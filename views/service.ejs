@@ -1,221 +1,154 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Waver Services</title>
+    <meta charset="UTF-8">
+    <title>Services - Waver</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/css/style.css">
 
-<style>
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:'Poppins',sans-serif;
-}
+    <style>
+        body {
+            background: #f7f7f7;
+        }
 
-body{
-background:#000;
-color:#fff;
-}
+        .service-container {
+            max-width: 1100px;
+            margin: 50px auto;
+            padding: 20px;
+        }
 
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:20px 80px;
-background:#111;
-position:sticky;
-top:0;
-}
+        .title {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 30px;
+        }
 
-nav h1{
-color:#FFD700;
-font-size:35px;
-}
+        .service-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
 
-nav ul{
-display:flex;
-gap:35px;
-list-style:none;
-}
+        .card {
+            background: white;
+            border-radius: 12px;
+            padding: 20px;
+            text-align: center;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.08);
+            transition: 0.3s;
+        }
 
-nav ul li a{
-color:white;
-text-decoration:none;
-font-size:18px;
-transition:.3s;
-}
+        .card:hover {
+            transform: translateY(-5px);
+        }
 
-nav ul li a:hover{
-color:#FFD700;
-}
+        .card img {
+            width: 100px;
+            height: 100px;
+            object-fit: cover;
+            border-radius: 50%;
+            margin-bottom: 15px;
+        }
 
-.hero{
-height:90vh;
-display:flex;
-justify-content:center;
-align-items:center;
-text-align:center;
-flex-direction:column;
-background:linear-gradient(rgba(0,0,0,.7),rgba(0,0,0,.8)),
-url("https://images.unsplash.com/photo-1622286342621-4bd786c2447c?w=1400");
-background-size:cover;
-background-position:center;
-}
+        .card h3 {
+            margin: 10px 0;
+        }
 
-.hero h1{
-font-size:60px;
-color:#FFD700;
-}
+        .card p {
+            color: gray;
+            font-size: 14px;
+        }
 
-.hero p{
-margin-top:20px;
-font-size:22px;
-width:70%;
-}
+        .card button {
+            margin-top: 15px;
+            padding: 10px 15px;
+            border: none;
+            background: black;
+            color: white;
+            border-radius: 8px;
+            cursor: pointer;
+        }
 
-.hero button{
-margin-top:35px;
-padding:15px 45px;
-font-size:20px;
-border:none;
-background:#FFD700;
-cursor:pointer;
-border-radius:40px;
-font-weight:bold;
-transition:.3s;
-}
+        .card button:hover {
+            background: #333;
+        }
 
-.hero button:hover{
-transform:scale(1.1);
-}
+        nav {
+            display: flex;
+            justify-content: space-between;
+            padding: 15px 40px;
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
 
-.services{
-padding:80px;
-}
+        nav ul {
+            display: flex;
+            gap: 20px;
+            list-style: none;
+        }
 
-.services h2{
-text-align:center;
-font-size:45px;
-color:#FFD700;
-margin-bottom:50px;
-}
-
-.cards{
-display:grid;
-grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
-gap:35px;
-}
-
-.card{
-background:#111;
-border-radius:15px;
-overflow:hidden;
-transition:.4s;
-}
-
-.card:hover{
-transform:translateY(-10px);
-box-shadow:0 0 25px gold;
-}
-
-.card img{
-width:100%;
-height:240px;
-object-fit:cover;
-}
-
-.card h3{
-padding:20px;
-font-size:28px;
-color:#FFD700;
-}
-
-.card p{
-padding:0 20px 20px;
-color:#ccc;
-}
-
-.card button{
-margin:20px;
-padding:12px 30px;
-background:#FFD700;
-border:none;
-font-weight:bold;
-border-radius:30px;
-cursor:pointer;
-}
-</style>
-
+        nav ul li {
+            cursor: pointer;
+        }
+    </style>
 </head>
 
 <body>
 
-<nav>
+    <!-- NAVBAR -->
+    <nav>
+        <h2>Waver</h2>
 
-<h1>Waver</h1>
+        <ul>
+            <li><a href="/">Home</a></li>
+            <li>Services</li>
+            <li><a href="/login">Logout</a></li>
+        </ul>
+    </nav>
 
-<ul>
-<li><a href="/">Home</a></li>
-<li><a href="/service">Services</a></li>
-<li><a href="/login">Login</a></li>
-</ul>
+    <!-- SERVICES -->
+    <div class="service-container">
 
-</nav>
+        <h1 class="title">Our Barber Services ✂️</h1>
 
-<section class="hero">
+        <div class="service-grid">
 
-<h1>Premium Barber Experience</h1>
+            <!-- Hair Cut -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1517832207067-4db24a2ae47c" alt="">
+                <h3>Hair Cut</h3>
+                <p>Professional haircut by experts</p>
+                <button>Book Now</button>
+            </div>
 
-<p>
-Book India's Best Barbers in Seconds.
-Luxury Haircuts, Beard Styling,
-Hair Spa & Grooming.
-</p>
+            <!-- Beard -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1520975922284-9f0c0f0c0f0c" alt="">
+                <h3>Beard Styling</h3>
+                <p>Shape your beard perfectly</p>
+                <button>Book Now</button>
+            </div>
 
-<a href="/login">
-<button>Book Appointment</button>
-</a>
+            <!-- Spa -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1503951458645-643d53b54a16" alt="">
+                <h3>Hair Spa</h3>
+                <p>Relaxing hair spa treatment</p>
+                <button>Book Now</button>
+            </div>
 
-</section>
+            <!-- Shaving -->
+            <div class="card">
+                <img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033" alt="">
+                <h3>Shaving</h3>
+                <p>Clean and smooth shaving service</p>
+                <button>Book Now</button>
+            </div>
 
-<section class="services">
+        </div>
+    </div>
 
-<h2>Our Services</h2>
+</body>
 
-<div class="cards">
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1621605815971-fbc98d665033?w=800">
-<h3>Hair Cut</h3>
-<p>Professional haircut with modern styling.</p>
-<button>Book Now</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1517832606299-7ae9b720a186?w=800">
-<h3>Beard Styling</h3>
-<p>Premium beard trimming & styling.</p>
-<button>Book Now</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1521590832167-7bcbfaa6381f?w=800">
-<h3>Hair Spa</h3>
-<p>Healthy hair treatment with premium products.</p>
-<button>Book Now</button>
-</div>
-
-<div class="card">
-<img src="https://images.unsplash.com/photo-1599351431202-1e0f0137899a?w=800">
-<h3>Facial</h3>
-<p>Luxury facial and skin care service.</p>
-
-<button>Book Now</button>
-</div>
-
-</div>
-
-</section>
+</html>
