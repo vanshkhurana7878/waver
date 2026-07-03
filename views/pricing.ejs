@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Pricing | Waver</title>
+
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            color: white;
+            font-family: Arial, sans-serif;
+        }
+
+        nav {
+            padding: 20px 40px;
+            border-bottom: 1px solid #333;
+        }
+
+        h1 {
+            text-align: center;
+            margin: 30px 0;
+        }
+
+        .container {
+            width: 90%;
+            margin: auto;
+        }
+
+        .card {
+            background: #111;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 10px;
+            border: 1px solid #333;
+        }
+
+        label {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            cursor: pointer;
+        }
+
+        .bottom {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            width: 100%;
+            background: #111;
+            padding: 15px;
+            border-top: 1px solid #333;
+        }
+
+        button {
+            width: 100%;
+            padding: 12px;
+            background: white;
+            border: none;
+            font-weight: bold;
+            margin-top: 10px;
+            cursor: pointer;
+        }
+
+        .cash {
+            text-align: center;
+            color: #aaa;
+            margin-top: 5px;
+        }
+    </style>
+</head>
+
+<body>
+
+<nav>
+    <h2>Waver</h2>
+</nav>
+
+<h1>Select Services</h1>
+
+<div class="container">
+
+    <!-- SERVICES -->
+    <% if (barber.service_name && barber.price) { %>
+
+        <div class="card">
+            <label>
+                <span>
+                    <input type="checkbox" class="service" data-price="<%= barber.price %>">
+                    <%= barber.service_name %>
+                </span>
+
+                <b>₹ <%= barber.price %></b>
+            </label>
+        </div>
+
+    <% } else { %>
+
+        <p>No services found</p>
+
+    <% } %>
+
+</div>
+
+<!-- BOTTOM BAR -->
+<div class="bottom">
+
+    <h3>Total: ₹<span id="total">0</span></h3>
+
+    <button onclick="bookNow()">Book Now</button>
+
+    <div class="cash">Only Cash Accepted</div>
+
+</div>
+
+<script>
+let checkboxes = document.querySelectorAll(".service");
+let totalEl = document.getElementById("total");
+
+checkboxes.forEach(cb => {
+    cb.addEventListener("change", updateTotal);
+});
+
+function updateTotal() {
+    let total = 0;
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            total += Number(cb.dataset.price);
+        }
+    });
+
+    totalEl.innerText = total;
+}
+
+function bookNow() {
+    let total = 0;
+
+    checkboxes.forEach(cb => {
+        if (cb.checked) {
+            total += Number(cb.dataset.price);
+        }
+    });
+
+    if (total === 0) {
+        alert("Please select a service");
+        return;
+    }
+
+    alert("Booking Confirmed (Cash Only) - Total ₹" + total);
+
+    // yaha future me backend API call karna hai
+}
+</script>
+
+</body>
+</html>

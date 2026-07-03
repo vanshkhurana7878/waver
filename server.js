@@ -135,6 +135,27 @@ app.get("/barbers", async (req, res) => {
     res.render("barber", {
         barbers: data
     });
+    // database -----------------2
+    app.get("/pricing/:id", async (req, res) => {
+
+    const barberId = req.params.id;
+
+    const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("id", barberId)
+        .single();
+
+    if (error) {
+        console.log(error);
+        return res.send("Error");
+    }
+
+    res.render("pricing", {
+        barber: data
+    });
+
+});
 
 });
 // ---------------- SERVER ----------------

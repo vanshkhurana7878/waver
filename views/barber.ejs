@@ -69,7 +69,7 @@
 <body>
 
 <nav>
-    <h2>WAVER</h2>
+    <h2>Waver</h2>
 </nav>
 
 <h1>Select Your Barber</h1>
@@ -90,7 +90,9 @@
 
 <p><b>phone:</b> <%= barber.phone %></p>
 
-<button>Select Barber</button>
+<a href="/pricing/<%= barber.id %>">
+    <button>Select Barber</button>
+</a>
 
 </div>
 
