@@ -135,6 +135,7 @@ app.get("/barbers", async (req, res) => {
     res.render("barber", {
         barbers: data
     });
+});
     // database -----------------2
     app.get("/pricing/:id", async (req, res) => {
 
@@ -157,7 +158,7 @@ app.get("/barbers", async (req, res) => {
 
 });
 
-});
+
 
 // ---------------- BOOKING CREATE ----------------
 
@@ -173,7 +174,7 @@ app.post("/create-booking", async (req, res) => {
     const parsedServices = JSON.parse(services);
 
     const { data, error } = await supabase
-        .from("user")
+        .from("bookings")
         .insert([
             {
                 barber_id,
@@ -191,12 +192,15 @@ app.post("/create-booking", async (req, res) => {
         return res.send("Booking failed");
     }
 
-    res.redirect(`/confirmation/${data.id}`);
+    return res.json({
+    success: true,
+    bookingId: data.id
+});
 });
 //----------------------------Database 3
 app.get("/confirmation/:id", async (req, res) => {
     const { data } = await supabase
-        .from("user")
+        .from("bookings")
         .select("*")
         .eq("id", req.params.id)
         .single();
@@ -208,7 +212,7 @@ app.get("/confirmation/:id", async (req, res) => {
 app.get("/booking-status/:id", async (req, res) => {
 
     const { data, error } = await supabase
-        .from("user")
+        .from("bookings")
         .select("status")
         .eq("id", req.params.id)
         .single();
