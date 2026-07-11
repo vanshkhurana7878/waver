@@ -69,6 +69,7 @@
             margin-top: 5px;
         }
     </style>
+    <script src="https://checkout.razorpay.com/v1/checkout.js"></script>
 </head>
 
 <body>
@@ -113,7 +114,19 @@
     Book Now
 </button>
 
-    <div class="cash">Only Cash Accepted</div>
+    <div class="cash">
+    <label>
+        <input type="radio" name="payment" value="cash" checked>
+        Cash on Shop
+    </label>
+
+    <br>
+
+    <label>
+        <input type="radio" name="payment" value="online">
+        Pay Online (Razorpay)
+    </label>
+</div>
 
 </div>
 
@@ -137,7 +150,8 @@ function updateTotal() {
     totalEl.innerText = total;
 }
 
-function bookNow() {
+async function bookNow() {
+
     let total = 0;
 
     checkboxes.forEach(cb => {
@@ -151,10 +165,57 @@ function bookNow() {
         return;
     }
 
-    alert("Booking Confirmed (Cash Only) - Total ₹" + total);
-window.location.href="/confirmation/<%=barber.id%>";
-    // yaha future me backend API call karna hai
+    const payment = document.querySelector('input[name="payment"]:checked').value;
+
+    // Cash
+    if (payment === "cash") {
+        window.location.href = "/confirmation/<%= barber.id %>";
+        return;
+    }
+
+    // Online
+    startRazorpay(total);
+
 }
+
+async function startRazorpay(amount) {
+
+    const res = await fetch("/create-order", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            amount: amount
+        })
+    });
+
+    const order = await res.json();
+
+    var options = {
+        key: "rzp_test_TCAPSTye93UTEk",
+        amount: order.amount,
+        currency: "INR",
+        name: "Waver",
+        description: "Salon Booking",
+        order_id: order.id,
+
+        handler: function (response) {
+
+            alert("Payment Successful 🎉");
+
+            window.location.href = "/confirmation/<%= barber.id %>";
+
+        }
+    };
+
+    var rzp = new Razorpay(options);
+
+    rzp.open();
+
+}
+
+    
 </script>
 
 </body>

@@ -24,6 +24,7 @@
     "node": "^26.4.0",
     "nodemailer": "^9.0.3",
     "otp-generator": "^4.0.1",
+    "razorpay": "^2.9.6",
     "resend": "^6.16.0"
   },
   "devDependencies": {

@@ -1,8 +1,14 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+const Razorpay = require("razorpay");
 
 const { Resend } = require("resend");
+//---razorpay
+const razorpay = new Razorpay({
+    key_id: process.env.RAZORPAY_KEY_ID,
+    key_secret: process.env.RAZORPAY_KEY_SECRET
+});//-----
 
 dotenv.config();
 console.log("SUPABASE URL:", process.env.SUPABASE_URL);
@@ -157,8 +163,29 @@ app.get("/barbers", async (req, res) => {
     });
 
 });
+//Razor 
+app.post("/create-order", async (req, res) => {
 
+    const options = {
+        amount: req.body.amount * 100, // ₹200 => 20000 paise
+        currency: "INR",
+        receipt: "receipt_" + Date.now()
+    };
 
+    try {
+
+        const order = await razorpay.orders.create(options);
+
+        res.json(order);
+
+    } catch (err) {
+
+        console.log(err);
+        res.status(500).send("Order creation failed");
+
+    }
+
+});
 
 // ---------------- BOOKING CREATE ----------------
 
