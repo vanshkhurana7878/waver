@@ -168,10 +168,32 @@ async function bookNow() {
     const payment = document.querySelector('input[name="payment"]:checked').value;
 
     // Cash
-    if (payment === "cash") {
-        window.location.href = "/confirmation/<%= barber.id %>";
-        return;
-    }
+if (payment === "cash") {
+
+    const res = await fetch("/create-booking", {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+            barber_id: "<%= barber.id %>",
+            services: JSON.stringify([
+                {
+                    name: "<%= barber.service_name %>",
+                    price: total
+                }
+            ]),
+            total_price: total,
+            payment_method: "cash"
+        })
+    });
+
+    const data = await res.json();
+
+    window.location.href = "/confirmation/" + data.bookingId;
+
+    return;
+}
 
     // Online
     startRazorpay(total);
