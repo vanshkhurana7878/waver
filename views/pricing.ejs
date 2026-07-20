@@ -169,9 +169,25 @@ async function bookNow() {
 
     // Cash
     if (payment === "cash") {
-        window.location.href = "/confirmation/<%= barber.id %>";
-        return;
-    }
+
+    const res = await fetch("/create-booking",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            barber_id:"<%= barber.id %>",
+            services: JSON.stringify(["<%= barber.service_name %>"]),
+            total_price: total,
+            payment_method:"cash"
+        })
+    });
+
+    const data = await res.json();
+
+    window.location.href="/confirmation/"+data.bookingId;
+}
+
 
     // Online
     startRazorpay(total);
@@ -200,13 +216,26 @@ async function startRazorpay(amount) {
         description: "Salon Booking",
         order_id: order.id,
 
-        handler: function (response) {
+        handler: async function () {
 
-            alert("Payment Successful 🎉");
+    const res = await fetch("/create-booking",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            barber_id:"<%= barber.id %>",
+            services: JSON.stringify(["<%= barber.service_name %>"]),
+            total_price: amount,
+            payment_method:"online"
+        })
+    });
 
-            window.location.href = "/confirmation/<%= barber.id %>";
+    const data = await res.json();
 
-        }
+    window.location.href="/confirmation/"+data.bookingId;
+
+}
     };
 
     var rzp = new Razorpay(options);
