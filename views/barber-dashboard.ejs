@@ -80,15 +80,52 @@ button{
 
 <p><b>Status:</b> <%= booking.status %></p>
 
-<button class="accept">Accept</button>
+<button class="accept" onclick="acceptBooking('<%= booking.id %>')">
+    Accept
+</button>
 
-<button class="reject">Reject</button>
+<button class="reject" onclick="rejectBooking('<%= booking.id %>')">
+    Reject
+</button>
 
 </div>
 
 <% }) %>
 
 </div>
+<script>
 
+async function acceptBooking(id){
+
+    const res = await fetch("/accept-booking/" + id,{
+        method:"POST"
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+        location.reload();
+    }else{
+        alert("Failed");
+    }
+
+}
+
+async function rejectBooking(id){
+
+    const res = await fetch("/reject-booking/" + id,{
+        method:"POST"
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+        location.reload();
+    }else{
+        alert("Failed");
+    }
+
+}
+</script>
 </body>
 </html>

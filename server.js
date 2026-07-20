@@ -264,6 +264,54 @@ app.post("/create-booking", async (req, res) => {
     bookingId: data.id
 });
 });
+//---- accept booking 
+app.post("/accept-booking/:id", async (req, res) => {
+
+    const { id } = req.params;
+
+    const { error } = await supabase
+        .from("bookings")
+        .update({
+            status: "confirmed"
+        })
+        .eq("id", id);
+
+    if (error) {
+        console.log(error);
+        return res.json({
+            success: false
+        });
+    }
+
+    res.json({
+        success: true
+    });
+
+});
+//-----------reject booking 
+app.post("/reject-booking/:id", async (req, res) => {
+
+    const { id } = req.params;
+
+    const { error } = await supabase
+        .from("bookings")
+        .update({
+            status: "rejected"
+        })
+        .eq("id", id);
+
+    if (error) {
+        console.log(error);
+        return res.json({
+            success: false
+        });
+    }
+
+    res.json({
+        success: true
+    });
+
+});
 //----------------------------Database 3
 app.get("/confirmation/:id", async (req, res) => {
     const { data } = await supabase
