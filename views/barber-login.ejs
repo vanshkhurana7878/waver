@@ -67,9 +67,9 @@ button:hover{
 
 async function sendOTP(){
 
-    let email=document.getElementById("email").value;
+    let email = document.getElementById("email").value;
 
-    await fetch("/send-email-otp",{
+    const res = await fetch("/barber-send-otp",{
         method:"POST",
         headers:{
             "Content-Type":"application/json"
@@ -77,9 +77,15 @@ async function sendOTP(){
         body:JSON.stringify({email})
     });
 
+    const data = await res.json();
+
+    if(!data.success){
+        alert("Access Denied");
+        return;
+    }
+
     alert("OTP Sent");
 }
-
 async function verifyOTP(){
 
     let otp=document.getElementById("otp").value;

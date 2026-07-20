@@ -114,6 +114,42 @@ app.post("/verify-email-otp", (req, res) => {
     }
 
 });
+//--------------barber login logic
+app.post("/barber-send-otp", async (req, res) => {
+
+    const { email } = req.body;
+
+    const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("email", email)
+        .eq("role", "barber")
+        .single();
+
+    if (error || !data) {
+        return res.json({
+            success: false,
+            message: "Access Denied"
+        });
+    }
+
+    userEmail = email;
+
+    storedOTP = Math.floor(100000 + Math.random() * 900000);
+
+    await resend.emails.send({
+        from: "Waver <noreply@waver.co.in>",
+        to: email,
+        subject: "Barber Login OTP",
+        html: `<h1>${storedOTP}</h1>`
+    });
+
+    res.json({
+        success: true
+    });
+
+});
+//-------test
 app.get("/test", async (req, res) => {
   const { data, error } = await supabase
     .from("users")
