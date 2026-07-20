@@ -78,7 +78,27 @@ setInterval(async () => {
     if (data.status === "confirmed") {
         statusEl.className = "confirmed";
         alert("🎉 Booking Confirmed!");
-        window.location.href = "/";
+        if (data.status === "confirmed") {
+
+    statusEl.className = "confirmed";
+    statusEl.innerText = "Confirmed ✅";
+
+    document.querySelector("h1").innerText = "🎉 Booking Confirmed";
+
+    document.querySelector(".loader").style.display = "none";
+
+}
+
+if (data.status === "rejected") {
+
+    statusEl.className = "pending";
+    statusEl.innerText = "Rejected ❌";
+
+    document.querySelector("h1").innerText = "❌ Booking Rejected";
+
+    document.querySelector(".loader").style.display = "none";
+
+}
     }
 
 }, 3000);
