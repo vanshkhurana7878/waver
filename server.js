@@ -251,9 +251,13 @@ app.post("/create-booking", async (req, res) => {
         .single();
 
     if (error) {
-        console.log(error);
-        return res.send("Booking failed");
-    }
+    console.log("Supabase Error:", error);
+
+    return res.status(500).json({
+        success: false,
+        error: error.message
+    });
+}
 
     return res.json({
     success: true,
