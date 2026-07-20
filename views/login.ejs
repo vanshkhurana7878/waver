@@ -43,6 +43,23 @@
         .login-box button:hover {
             background: #333;
         }
+    <!--barber-->
+    .barber-btn{
+    display:block;
+    width:100%;
+    text-align:center;
+    padding:12px;
+    background:#28a745;
+    color:white;
+    text-decoration:none;
+    border-radius:8px;
+    margin-top:15px;
+    font-weight:bold;
+}
+
+.barber-btn:hover{
+    background:#1f8a38;
+}
     </style>
 </head>
 
@@ -72,6 +89,11 @@
         <input type="text" id="otp" placeholder="Enter OTP">
 
         <button onclick="verifyOTP()">Verify OTP</button>
+        <hr style="margin:20px 0;">
+
+<a href="/barber-login" class="barber-btn">
+    ✂ Barber Login
+</a>
     </div>
 
     <!-- EMAIL OTP SCRIPT -->

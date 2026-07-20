@@ -169,35 +169,9 @@ async function bookNow() {
 
     // Cash
     if (payment === "cash") {
-
-    const res = await fetch("/create-booking", {
-        method: "POST",
-        headers: {
-            "Content-Type": "application/json"
-        },
-        body: JSON.stringify({
-            barber_id: "<%= barber.id %>",
-            services: JSON.stringify([
-                {
-                    name: "<%= barber.service_name %>",
-                    price: total
-                }
-            ]),
-            total_price: total,
-            payment_method: "cash"
-        })
-    });
-
-    const data = await res.json();
-
-    if (data.success) {
-        window.location.href = "/confirmation/" + data.bookingId;
-    } else {
-        alert("Booking Failed");
+        window.location.href = "/confirmation/<%= barber.id %>";
+        return;
     }
-
-    return;
-}
 
     // Online
     startRazorpay(total);

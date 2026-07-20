@@ -251,6 +251,28 @@ app.get("/booking-status/:id", async (req, res) => {
 
     res.json(data);
 });
+//barber dashboard
+app.get("/barber-dashboard", async (req, res) => {
+
+    const { data, error } = await supabase
+        .from("bookings")
+        .select("*")
+        .eq("status", "pending");
+
+    if (error) {
+        console.log(error);
+        return res.send("Error");
+    }
+
+    res.render("barber-dashboard", {
+        bookings: data
+    });
+
+});
+//barber login
+app.get("/barber-login", (req, res) => {
+    res.render("barber-login");
+});
 // ---------------- SERVER ----------------
 
 const PORT = process.env.PORT || 3000;

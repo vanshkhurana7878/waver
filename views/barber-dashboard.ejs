@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Barber Dashboard | Waver</title>
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    color:white;
+    font-family:Arial;
+}
+
+nav{
+    background:#111;
+    padding:20px;
+    border-bottom:1px solid #333;
+}
+
+.container{
+    width:90%;
+    margin:30px auto;
+}
+
+.card{
+    background:#111;
+    border:1px solid #333;
+    border-radius:10px;
+    padding:20px;
+    margin-bottom:20px;
+}
+
+button{
+    padding:10px 20px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-weight:bold;
+    margin-right:10px;
+}
+
+.accept{
+    background:#00c853;
+    color:white;
+}
+
+.reject{
+    background:#ff1744;
+    color:white;
+}
+</style>
+
+</head>
+<body>
+
+<nav>
+    <h2>✂ Waver Barber Dashboard</h2>
+</nav>
+
+<div class="container">
+
+<% if(bookings.length===0){ %>
+
+<h3>No Pending Bookings</h3>
+
+<% } %>
+
+<% bookings.forEach(function(booking){ %>
+
+<div class="card">
+
+<h3>Booking #<%= booking.id %></h3>
+
+<p><b>Service:</b> <%= booking.services[0].name %></p>
+
+<p><b>Price:</b> ₹<%= booking.total_price %></p>
+
+<p><b>Payment:</b> <%= booking.payment_method %></p>
+
+<p><b>Status:</b> <%= booking.status %></p>
+
+<button class="accept">Accept</button>
+
+<button class="reject">Reject</button>
+
+</div>
+
+<% }) %>
+
+</div>
+
+</body>
+</html>

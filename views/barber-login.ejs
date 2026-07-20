@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Barber Login | Waver</title>
+
+<style>
+body{
+    margin:0;
+    background:#000;
+    font-family:Arial;
+}
+
+.box{
+    width:350px;
+    margin:80px auto;
+    background:#fff;
+    padding:30px;
+    border-radius:12px;
+}
+
+input{
+    width:100%;
+    padding:12px;
+    margin:10px 0;
+    border:1px solid #ddd;
+    border-radius:8px;
+    box-sizing:border-box;
+}
+
+button{
+    width:100%;
+    padding:12px;
+    margin-top:10px;
+    background:#000;
+    color:white;
+    border:none;
+    border-radius:8px;
+    cursor:pointer;
+}
+
+button:hover{
+    background:#333;
+}
+</style>
+
+</head>
+
+<body>
+
+<div class="box">
+
+<h2>✂ Barber Login</h2>
+
+<input type="email" id="email" placeholder="Enter Barber Email">
+
+<button onclick="sendOTP()">Send OTP</button>
+
+<input type="text" id="otp" placeholder="Enter OTP">
+
+<button onclick="verifyOTP()">Login</button>
+
+</div>
+
+<script>
+
+async function sendOTP(){
+
+    let email=document.getElementById("email").value;
+
+    await fetch("/send-email-otp",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({email})
+    });
+
+    alert("OTP Sent");
+}
+
+async function verifyOTP(){
+
+    let otp=document.getElementById("otp").value;
+
+    const res=await fetch("/verify-email-otp",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({otp})
+    });
+
+    const data=await res.json();
+
+    if(data.success){
+
+        window.location.href="/barber-dashboard";
+
+    }else{
+
+        alert("Invalid OTP");
+
+    }
+
+}
+
+</script>
+
+</body>
+
+</html>
