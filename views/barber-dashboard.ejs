@@ -94,7 +94,7 @@ button{
 
 </div>
 <script>
-
+const notificationSound = new Audio("/sounds/notification.mp3");
 async function acceptBooking(id){
 
     const res = await fetch("/accept-booking/" + id,{
@@ -126,6 +126,30 @@ async function rejectBooking(id){
     }
 
 }
+let lastBookingCount = "<%= bookings.length %>";
+
+setInterval(async () => {
+
+    const res = await fetch("/pending-bookings");
+    const bookings = await res.json();
+
+    if (bookings.length > lastBookingCount) {
+
+        notificationSound.play();
+
+        if (navigator.vibrate) {
+            navigator.vibrate([300,100,300]);
+        }
+
+        alert("🔔 New Booking Received!");
+
+        location.reload();
+
+    }
+
+    lastBookingCount = bookings.length;
+
+}, 2000);
 </script>
 </body>
 </html>
