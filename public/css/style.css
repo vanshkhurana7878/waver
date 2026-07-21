@@ -6,7 +6,7 @@ font-family:Arial,sans-serif;
 }
 
 body{
-background:#111;
+background:#000;
 color:white;
 }
 
@@ -14,8 +14,9 @@ nav{
 display:flex;
 justify-content:space-between;
 align-items:center;
-padding:20px 60px;
-background:#000000;
+padding:18px 50px;
+background:#000;
+border-bottom:1px solid #222;
 }
 
 nav ul{
