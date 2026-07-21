@@ -357,6 +357,22 @@ app.get("/barber-dashboard", async (req, res) => {
     });
 
 });
+//barber booking pending 
+app.get("/pending-bookings", async (req, res) => {
+
+    const { data, error } = await supabase
+        .from("bookings")
+        .select("*")
+        .eq("status", "pending");
+
+    if (error) {
+        console.log(error);
+        return res.json([]);
+    }
+
+    res.json(data);
+
+});
 //barber login
 app.get("/barber-login", (req, res) => {
     res.render("barber-login");
