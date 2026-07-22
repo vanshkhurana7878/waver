@@ -339,6 +339,24 @@ app.get("/booking-status/:id", async (req, res) => {
 
     res.json(data);
 });
+//------------google login
+app.get("/auth/google", async (req, res) => {
+
+    const { data, error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+            redirectTo: "https://waver-66rr.onrender.com"
+        }
+    });
+
+    if (error) {
+        console.log(error);
+        return res.send("Google Login Failed");
+    }
+
+    res.redirect(data.url);
+
+});
 //barber dashboard
 app.get("/barber-dashboard", async (req, res) => {
 
