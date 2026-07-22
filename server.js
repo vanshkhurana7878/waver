@@ -470,7 +470,9 @@ app.get("/term", (req, res) => {
     res.render("term");
 });
 //-----------contact us
-
+app.get("/contactus", (req, res) => {
+    res.render("contactus");
+});
 
 
 // ---------------- BOOKING HISTORY ----------------
