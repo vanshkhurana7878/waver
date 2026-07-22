@@ -209,11 +209,15 @@ function toggleProfile(){
 <div id="profilePanel" class="profile-panel">
 
     <div class="profile-header">
-        <div class="profile-avatar">👤</div>
+       <img
+    id="profileAvatar"
+    src="/images/default-user.png"
+    class="profile-avatar-img"
+>
 
-        <h2>Welcome!</h2>
+<h2 id="userName">Welcome</h2>
 
-        <p id="userEmail">Guest User</p>
+<p id="userEmail">Loading...</p>
     </div>
 
     <hr>
@@ -227,6 +231,39 @@ function toggleProfile(){
     <a href="/login">🚪 Logout</a>
 
 </div>
+<--! google >
+
+
+<script type="module">
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
+
+const supabase = createClient(
+    "https://jnupyibeedhzwdqcxtnf.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpudXB5aWJlZWRoendkcWN4dG5mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwNTQxODcsImV4cCI6MjA5ODYzMDE4N30.LudlDiybkPGtGc5XAAcKiQ_ZRmE1Gj3TFzM3kg4pHew"
+);
+
+const {
+    data: { session }
+} = await supabase.auth.getSession();
+
+if (session) {
+
+    const user = session.user;
+
+    document.getElementById("userName").innerText =
+        user.user_metadata.full_name || "User";
+
+    document.getElementById("userEmail").innerText =
+        user.email;
+
+    document.getElementById("profileAvatar").src =
+        user.user_metadata.avatar_url;
+
+}
+</script>
+
+</body>
+</html>
 </body>
 
 </html>
