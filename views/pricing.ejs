@@ -234,7 +234,7 @@ async function startRazorpay(amount) {
     const data = await res.json();
 
     window.location.href="/confirmation/"+data.bookingId;
-
+console.log("BOOKING ID:", bookingId);
 }
     };
 

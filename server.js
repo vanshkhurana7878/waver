@@ -359,6 +359,12 @@ app.get("/confirmation/:id", async (req, res) => {
         .select("*")
         .eq("id", req.params.id)
         .single();
+    if(error || !data){
+
+        console.log("Confirmation Error:", error);
+ return res.send("Booking not found");
+
+    }
 
     res.render("confirmation", { booking: data });
 });
