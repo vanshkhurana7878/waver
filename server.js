@@ -298,7 +298,7 @@ if(userError || !user){
         error: error.message
     });
 }
-
+console.log("Inserted booking:", data);
     return res.json({
     success: true,
     bookingId: data.id

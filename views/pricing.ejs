@@ -171,10 +171,12 @@ async function bookNow() {
     if (payment === "cash") {
 
     const res = await fetch("/create-booking",{
-        method:"POST",
-        headers:{
-            "Content-Type":"application/json"
-        },
+    method:"POST",
+    headers:{
+        "Content-Type":"application/json",
+        "Authorization":"Bearer " + localStorage.getItem("access_token")
+    },
+    
         body:JSON.stringify({
             barber_id:"<%= barber.id %>",
             services: JSON.stringify(["<%= barber.service_name %>"]),
@@ -185,7 +187,14 @@ async function bookNow() {
 
     const data = await res.json();
 
-    window.location.href="/confirmation/"+data.bookingId;
+console.log(data);
+
+if (!data.success) {
+    alert(data.message || "Booking failed");
+    return;
+}
+
+window.location.href = "/confirmation/" + data.bookingId;
 }
 
 
@@ -235,7 +244,14 @@ async function startRazorpay(amount) {
 
     const data = await res.json();
 
-    window.location.href="/confirmation/"+data.bookingId;
+console.log(data);
+
+if (!data.success) {
+    alert(data.message || "Booking failed");
+    return;
+}
+
+window.location.href = "/confirmation/" + data.bookingId;
 
 }
     };
