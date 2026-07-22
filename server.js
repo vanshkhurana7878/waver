@@ -354,19 +354,26 @@ app.post("/reject-booking/:id", async (req, res) => {
 });
 //----------------------------Database 3
 app.get("/confirmation/:id", async (req, res) => {
-    const { data } = await supabase
+
+    const { data, error } = await supabase
         .from("bookings")
         .select("*")
         .eq("id", req.params.id)
         .single();
+
+
     if(error || !data){
 
         console.log("Confirmation Error:", error);
- return res.send("Booking not found");
+        return res.send("Booking not found");
 
     }
 
-    res.render("confirmation", { booking: data });
+
+    res.render("confirmation", { 
+        booking: data 
+    });
+
 });
 // ---------------- BOOKING STATUS CHECK ----------------
 

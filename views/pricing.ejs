@@ -199,7 +199,8 @@ async function startRazorpay(amount) {
     const res = await fetch("/create-order", {
         method: "POST",
         headers: {
-            "Content-Type": "application/json"
+            "Content-Type": "application/json",
+            "Authorization":"Bearer " + localStorage.getItem("access_token")
         },
         body: JSON.stringify({
             amount: amount
@@ -221,7 +222,8 @@ async function startRazorpay(amount) {
     const res = await fetch("/create-booking",{
         method:"POST",
         headers:{
-            "Content-Type":"application/json"
+            "Content-Type":"application/json",
+             "Authorization":"Bearer " + localStorage.getItem("access_token")
         },
         body:JSON.stringify({
             barber_id:"<%= barber.id %>",
@@ -234,7 +236,7 @@ async function startRazorpay(amount) {
     const data = await res.json();
 
     window.location.href="/confirmation/"+data.bookingId;
-console.log("BOOKING ID:", bookingId);
+
 }
     };
 
