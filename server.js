@@ -472,6 +472,7 @@ app.get("/booking-history", async (req, res) => {
 
     const token = req.headers.authorization?.replace("Bearer ", "");
 
+req.query.token;
     if (!token) {
         return res.send("Login required");
     }

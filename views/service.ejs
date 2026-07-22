@@ -222,7 +222,7 @@ function toggleProfile(){
 
     <hr>
 
-    <a href="/booking-history">📜 Booking History</a>
+   <a href="/booking-history" onclick="saveSession()">📜 Booking History</a>
 
     <a href="/term">📄 Terms & Conditions</a>
 
@@ -232,6 +232,7 @@ function toggleProfile(){
 
 </div>
 
+<!-- google r -->
 
 
 <script type="module">
@@ -247,6 +248,10 @@ const {
 } = await supabase.auth.getSession();
 
 if (session) {
+    localStorage.setItem(
+    "access_token",
+    session.access_token
+);
 
     const user = session.user;
 
@@ -267,6 +272,18 @@ if (session) {
 const result = await response.json();
 
 console.log("Server User:", result);
+
+}
+function saveSession(){
+
+    const token = localStorage.getItem("access_token");
+
+    if(token){
+
+        window.location.href =
+        "/booking-history?token=" + token;
+
+    }
 
 }
 </script>
