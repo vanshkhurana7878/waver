@@ -222,7 +222,7 @@ function toggleProfile(){
 
     <hr>
 
-   <a href="/booking-history" onclick="saveSession()">📜 Booking History</a>
+   <a href="javascript:void(0)" onclick="bookingHistory()">📜 Booking History</a>
 
     <a href="/term">📄 Terms & Conditions</a>
 
@@ -274,7 +274,7 @@ const result = await response.json();
 console.log("Server User:", result);
 
 }
-function saveSession(){
+window.bookingHistory = function(){
 
     const token = localStorage.getItem("access_token");
 
@@ -282,6 +282,10 @@ function saveSession(){
 
         window.location.href =
         "/booking-history?token=" + token;
+
+    }else{
+
+        alert("Login required");
 
     }
 
