@@ -469,43 +469,51 @@ app.get("/barber-login", (req, res) => {
 // ---------------- BOOKING HISTORY ----------------
 
 app.get("/booking-history", async (req, res) => {
+
 console.log("QUERY TOKEN:", req.query.token);
-    const token = req.headers.authorization?.replace("Bearer ", "");
 
-req.query.token;
+const token =
+    req.headers.authorization?.replace("Bearer ", "")
+    ||
+    req.query.token;
+
+
 console.log("FINAL TOKEN:", token);
-    if (!token) {
-        return res.send("Login required");
-    }
 
 
-    const {
-        data: { user },
-        error: userError
-    } = await supabase.auth.getUser(token);
+if (!token) {
+    return res.send("Login required");
+}
 
 
-    if (userError || !user) {
-        return res.send("Invalid User");
-    }
+const {
+    data: { user },
+    error: userError
+} = await supabase.auth.getUser(token);
 
 
-    const { data, error } = await supabase
-        .from("bookings")
-        .select("*")
-        .eq("user_id", user.id)
-        .order("created_at", { ascending: false });
+if (userError || !user) {
+    console.log(userError);
+    return res.send("Invalid User");
+}
 
 
-    if (error) {
-        console.log(error);
-        return res.send("Error fetching bookings");
-    }
+const { data, error } = await supabase
+    .from("bookings")
+    .select("*")
+    .eq("user_id", user.id)
+    .order("created_at", { ascending: false });
 
 
-    res.render("booking-history", {
-        bookings: data
-    });
+if (error) {
+    console.log(error);
+    return res.send("Error fetching bookings");
+}
+
+
+res.render("booking-history", {
+    bookings:data
+});
 
 });
 // ---------------- SERVER ----------------
