@@ -258,6 +258,15 @@ if (session) {
 
     document.getElementById("profileAvatar").src =
         user.user_metadata.avatar_url;
+        const response = await fetch("/api/me", {
+    headers: {
+        Authorization: "Bearer " + session.access_token
+    }
+});
+
+const result = await response.json();
+
+console.log("Server User:", result);
 
 }
 </script>
