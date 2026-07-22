@@ -131,3 +131,88 @@ color:white;
     transform:scale(1.08);
 
 }
+.profile-panel{
+
+    position:fixed;
+
+    top:0;
+
+    right:-320px;
+
+    width:300px;
+
+    height:100vh;
+
+    background:#111;
+
+    border-left:1px solid #333;
+
+    transition:.35s;
+
+    z-index:99999;
+
+    padding:25px;
+
+    box-sizing:border-box;
+
+}
+
+.profile-panel.active{
+
+    right:0;
+
+}
+
+.profile-header{
+
+    text-align:center;
+
+}
+
+.profile-avatar{
+
+    width:80px;
+
+    height:80px;
+
+    border-radius:50%;
+
+    background:white;
+
+    color:black;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    font-size:35px;
+
+    margin:auto;
+
+    margin-bottom:15px;
+
+}
+
+.profile-panel a{
+
+    display:block;
+
+    color:white;
+
+    text-decoration:none;
+
+    padding:14px 0;
+
+    border-bottom:1px solid #222;
+
+    font-size:16px;
+
+}
+
+.profile-panel a:hover{
+
+    color:#ddd;
+
+}

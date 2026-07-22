@@ -193,7 +193,40 @@
         ✂️ ONLY HAIRCUT SERVICES ARE AVAILABLE • REST OF THE SERVICES WILL BE AVAILABLE SOON ✂️
     </marquee>
 </div>
+<script>
 
+function toggleProfile(){
+
+    document
+    .getElementById("profilePanel")
+    .classList
+    .toggle("active");
+
+}
+
+</script>
+<!-- Profile Sidebar -->
+<div id="profilePanel" class="profile-panel">
+
+    <div class="profile-header">
+        <div class="profile-avatar">👤</div>
+
+        <h2>Welcome!</h2>
+
+        <p id="userEmail">Guest User</p>
+    </div>
+
+    <hr>
+
+    <a href="#">📜 Booking History</a>
+
+    <a href="#">📄 Terms & Conditions</a>
+
+    <a href="#">📞 Contact Us</a>
+
+    <a href="/login">🚪 Logout</a>
+
+</div>
 </body>
 
 </html>
