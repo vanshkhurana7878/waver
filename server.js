@@ -469,10 +469,11 @@ app.get("/barber-login", (req, res) => {
 // ---------------- BOOKING HISTORY ----------------
 
 app.get("/booking-history", async (req, res) => {
-
+console.log("QUERY TOKEN:", req.query.token);
     const token = req.headers.authorization?.replace("Bearer ", "");
 
 req.query.token;
+console.log("FINAL TOKEN:", token);
     if (!token) {
         return res.send("Login required");
     }
