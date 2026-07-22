@@ -465,6 +465,13 @@ app.get("/pending-bookings", async (req, res) => {
 app.get("/barber-login", (req, res) => {
     res.render("barber-login");
 });
+//----terms
+app.get("/term", (req, res) => {
+    res.render("term");
+});
+//-----------contact us
+
+
 
 // ---------------- BOOKING HISTORY ----------------
 
