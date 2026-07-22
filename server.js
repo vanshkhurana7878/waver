@@ -345,7 +345,7 @@ app.get("/auth/google", async (req, res) => {
     const { data, error } = await supabase.auth.signInWithOAuth({
         provider: "google",
         options: {
-            redirectTo: "https://waver-66rr.onrender.com"
+            redirectTo: "https://waver-66rr.onrender.com/service"
         }
     });
 
