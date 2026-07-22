@@ -240,13 +240,35 @@ app.post("/create-order", async (req, res) => {
 // ---------------- BOOKING CREATE ----------------
 
 app.post("/create-booking", async (req, res) => {
+    const token = req.headers.authorization?.replace("Bearer ", "");
+
+if (!token) {
+    return res.status(401).json({
+        success:false,
+        message:"Login required"
+    });
+}
+
+
+const {
+    data:{ user },
+    error:userError
+} = await supabase.auth.getUser(token);
+
+
+if(userError || !user){
+    return res.status(401).json({
+        success:false,
+        message:"Invalid user"
+    });
+}
 
     const {
         barber_id,
         services,
         total_price,
-        payment_method,
-        user_email
+        payment_method
+        
     } = req.body;
 
     const parsedServices = JSON.parse(services);
@@ -255,12 +277,14 @@ app.post("/create-booking", async (req, res) => {
         .from("bookings")
         .insert([
             {
-                barber_id,
-                user_email,
-                services: parsedServices,
-                total_price,
-                payment_method,
-                status: "pending"
+               
+   barber_id,
+    user_id:user.id,
+    user_email:user.email,
+    services: parsedServices,
+    total_price,
+    payment_method,
+    status:"pending"
             }
         ])
         .select()
@@ -440,6 +464,47 @@ app.get("/pending-bookings", async (req, res) => {
 //barber login
 app.get("/barber-login", (req, res) => {
     res.render("barber-login");
+});
+
+// ---------------- BOOKING HISTORY ----------------
+
+app.get("/booking-history", async (req, res) => {
+
+    const token = req.headers.authorization?.replace("Bearer ", "");
+
+    if (!token) {
+        return res.send("Login required");
+    }
+
+
+    const {
+        data: { user },
+        error: userError
+    } = await supabase.auth.getUser(token);
+
+
+    if (userError || !user) {
+        return res.send("Invalid User");
+    }
+
+
+    const { data, error } = await supabase
+        .from("bookings")
+        .select("*")
+        .eq("user_id", user.id)
+        .order("created_at", { ascending: false });
+
+
+    if (error) {
+        console.log(error);
+        return res.send("Error fetching bookings");
+    }
+
+
+    res.render("booking-history", {
+        bookings: data
+    });
+
 });
 // ---------------- SERVER ----------------
 

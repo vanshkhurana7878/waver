@@ -1,0 +1,153 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<title>Booking History | Waver</title>
+
+<link rel="stylesheet" href="/css/style.css">
+
+<style>
+
+body{
+    margin:0;
+    background:#000;
+    color:white;
+    font-family:Arial;
+}
+
+nav{
+    padding:20px 40px;
+    border-bottom:1px solid #333;
+}
+
+.container{
+    width:90%;
+    max-width:900px;
+    margin:40px auto;
+}
+
+h1{
+    text-align:center;
+}
+
+
+.booking-card{
+
+    background:#111;
+    border:1px solid #333;
+    border-radius:12px;
+    padding:20px;
+    margin:20px 0;
+
+}
+
+
+.booking-card p{
+
+    color:#ccc;
+    font-size:16px;
+
+}
+
+
+.status{
+
+    font-weight:bold;
+}
+
+
+.pending{
+    color:orange;
+}
+
+
+.confirmed{
+    color:lightgreen;
+}
+
+
+.rejected{
+    color:red;
+}
+
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<nav>
+
+<img src="/images/waver.png" class="logo">
+
+</nav>
+
+
+<div class="container">
+
+
+<h1>📜 My Booking History</h1>
+
+
+<% if(bookings.length === 0){ %>
+
+
+<h2 style="text-align:center;color:#aaa;">
+No bookings found
+</h2>
+
+
+<% } %>
+
+
+
+<% bookings.forEach(booking => { %>
+
+
+<div class="booking-card">
+
+
+<h2>
+✂ <%= booking.services %>
+</h2>
+
+
+<p>
+💰 Price: ₹<%= booking.total_price %>
+</p>
+
+
+<p>
+💳 Payment: <%= booking.payment_method %>
+</p>
+
+
+<p>
+Status:
+
+<span class="status <%= booking.status %>">
+
+<%= booking.status %>
+
+</span>
+
+</p>
+
+
+</div>
+
+
+<% }) %>
+
+
+
+</div>
+
+
+</body>
+
+</html>
