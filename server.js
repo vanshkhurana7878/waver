@@ -1,7 +1,10 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
+
 const Razorpay = require("razorpay");
+const session = require("express-session");
+const cookieParser = require("cookie-parser");
 
 const { Resend } = require("resend");
 //---razorpay
@@ -28,7 +31,18 @@ app.set("views", path.join(__dirname, "views"));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.use(cookieParser());
 
+app.use(
+    session({
+        secret: "waver-secret-key",
+        resave: false,
+        saveUninitialized: false,
+        cookie: {
+            maxAge: 1000 * 60 * 60 * 24 // 24 hours
+        }
+    })
+);
 // ---------------- HOME ----------------
 
 app.get("/", (req, res) => {
@@ -231,7 +245,8 @@ app.post("/create-booking", async (req, res) => {
         barber_id,
         services,
         total_price,
-        payment_method
+        payment_method,
+        user_email
     } = req.body;
 
     const parsedServices = JSON.parse(services);
@@ -241,6 +256,7 @@ app.post("/create-booking", async (req, res) => {
         .insert([
             {
                 barber_id,
+                user_email,
                 services: parsedServices,
                 total_price,
                 payment_method,
@@ -338,6 +354,36 @@ app.get("/booking-status/:id", async (req, res) => {
     }
 
     res.json(data);
+});
+//////google setup 2
+app.get("/api/me", async (req, res) => {
+
+    const token = req.headers.authorization?.replace("Bearer ", "");
+
+    if (!token) {
+        return res.status(401).json({
+            success: false,
+            message: "Not logged in"
+        });
+    }
+
+    const {
+        data: { user },
+        error
+    } = await supabase.auth.getUser(token);
+
+    if (error || !user) {
+        return res.status(401).json({
+            success: false,
+            message: "Invalid session"
+        });
+    }
+
+    res.json({
+        success: true,
+        user
+    });
+
 });
 //------------google login
 app.get("/auth/google", async (req, res) => {
