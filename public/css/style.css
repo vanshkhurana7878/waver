@@ -233,3 +233,29 @@ color:white;
     margin-bottom:15px;
 
 }
+.close-profile{
+
+    position:absolute;
+    top:15px;
+    left:15px;
+
+    width:35px;
+    height:35px;
+
+    border-radius:50%;
+    border:none;
+
+    background:white;
+    color:black;
+
+    font-size:22px;
+    cursor:pointer;
+
+}
+
+
+.close-profile:hover{
+
+    transform:scale(1.1);
+
+}
