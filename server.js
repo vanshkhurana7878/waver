@@ -107,24 +107,54 @@ app.post("/send-email-otp", async (req, res) => {
 
 // ---------------- VERIFY OTP ----------------
 
-app.post("/verify-email-otp", (req, res) => {
+app.post("/verify-email-otp", async (req, res) => {
 
     const otp = req.body.otp;
 
     if (otp == storedOTP) {
 
+        // check user already exists
+        const { data: existingUser } = await supabase
+            .from("user")
+            .select("*")
+            .eq("email", userEmail)
+            .single();
+
+
+        // new user create
+        if (!existingUser) {
+
+            const { error } = await supabase
+                .from("user")
+                .insert([
+                    {
+                        email: userEmail,
+                        role: "user"
+                    }
+                ]);
+
+            if(error){
+                console.log("User Create Error:", error);
+            }
+
+        }
+
+
         storedOTP = null;
+
 
         return res.json({
             success: true,
             redirect: "/service"
         });
 
+
     } else {
 
         return res.json({
-            success: false
+            success:false
         });
+
     }
 
 });
