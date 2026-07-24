@@ -1,1 +1,90 @@
-<h1>Users Page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+
+<title>Users | Waver Admin</title>
+
+<style>
+
+body{
+    background:#111;
+    color:white;
+    font-family:Arial;
+    padding:30px;
+}
+
+table{
+    width:100%;
+    background:#1c1c1c;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:15px;
+    border-bottom:1px solid #333;
+    text-align:left;
+}
+
+th{
+    background:black;
+}
+
+</style>
+
+</head>
+
+
+<body>
+
+
+<h1>👥 Waver Users</h1>
+
+
+<table>
+
+<tr>
+
+<th>ID</th>
+<th>Email</th>
+<th>Role</th>
+<th>Created</th>
+
+</tr>
+
+
+<% users.forEach(user=>{ %>
+
+
+<tr>
+
+<td>
+<%= user.id %>
+</td>
+
+
+<td>
+<%= user.email %>
+</td>
+
+
+<td>
+<%= user.role %>
+</td>
+
+
+<td>
+<%= user.created_at || "-" %>
+</td>
+
+
+</tr>
+
+
+<% }) %>
+
+
+</table>
+
+
+</body>
+</html>

@@ -633,14 +633,32 @@ res.render("booking-history", {
 
 });
 // admin users
-app.get("/admin/users", (req, res) => {
-    if (!req.session.isAdmin) {
+app.get("/admin/users", async (req,res)=>{
+
+    if(!req.session.isAdmin){
         return res.redirect("/admin-login");
     }
 
-    res.render("admin-users");
-});
 
+    const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("role","user")
+        .order("created_at",{ascending:false});
+
+
+    if(error){
+        console.log(error);
+        return res.send("Error loading users");
+    }
+
+
+    res.render("admin-users",{
+        users:data
+    });
+
+});
+//admin barbers
 app.get("/admin/barbers", (req, res) => {
     if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
