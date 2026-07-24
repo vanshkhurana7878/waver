@@ -461,18 +461,39 @@ app.get("/barber-dashboard", async (req, res) => {
 //----------admin panel
 app.get("/admin", async (req, res) => {
 
-    const { data, error } = await supabase
+    if (!req.session.isAdmin) {
+        return res.redirect("/admin-login");
+    }
+
+    const { data: bookings } = await supabase
         .from("bookings")
         .select("*")
         .order("created_at", { ascending: false });
 
-    if (error) {
-        console.log(error);
-        return res.send("Error");
-    }
+    const { count: totalUsers } = await supabase
+        .from("user")
+        .select("*", { count: "exact", head: true })
+        .eq("role", "user");
+
+    const { count: totalBarbers } = await supabase
+        .from("user")
+        .select("*", { count: "exact", head: true })
+        .eq("role", "barber");
+
+    let revenue = 0;
+
+    bookings.forEach(b => {
+        if (b.status === "confirmed") {
+            revenue += Number(b.total_price);
+        }
+    });
 
     res.render("admin", {
-        bookings: data
+        bookings,
+        totalUsers,
+        totalBarbers,
+        totalBookings: bookings.length,
+        revenue
     });
 
 });
@@ -580,6 +601,40 @@ res.render("booking-history", {
     bookings:data
 });
 
+});
+//------------------app.get("/admin/users",(req,res)=>{
+    if(!req.session.isAdmin){
+        return res.redirect("/admin-login");
+    }
+    res.render("admin-users");
+});
+
+app.get("/admin/barbers",(req,res)=>{
+    if(!req.session.isAdmin){
+        return res.redirect("/admin-login");
+    }
+    res.render("admin-barbers");
+});
+
+app.get("/admin/bookings",(req,res)=>{
+    if(!req.session.isAdmin){
+        return res.redirect("/admin-login");
+    }
+    res.render("admin-bookings");
+});
+
+app.get("/admin/revenue",(req,res)=>{
+    if(!req.session.isAdmin){
+        return res.redirect("/admin-login");
+    }
+    res.render("admin-revenue");
+});
+
+app.get("/admin/settings",(req,res)=>{
+    if(!req.session.isAdmin){
+        return res.redirect("/admin-login");
+    }
+    res.render("admin-settings");
 });
 // ---------------- SERVER ----------------
 
