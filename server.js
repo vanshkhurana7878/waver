@@ -514,7 +514,7 @@ app.post("/admin-login", (req, res) => {
     const { email, password } = req.body;
 
     if (
-        email === "waverbooking1@gmail.com" &&
+        email === process.env.ADMIN_EMAIL &&
         password === process.env.ADMIN_PASSWORD
     ) {
 
