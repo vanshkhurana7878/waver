@@ -458,6 +458,24 @@ app.get("/barber-dashboard", async (req, res) => {
     });
 
 });
+//----------admin panel
+app.get("/admin", async (req, res) => {
+
+    const { data, error } = await supabase
+        .from("bookings")
+        .select("*")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.log(error);
+        return res.send("Error");
+    }
+
+    res.render("admin", {
+        bookings: data
+    });
+
+});
 //barber booking pending 
 app.get("/pending-bookings", async (req, res) => {
 
@@ -487,7 +505,27 @@ app.get("/contactus", (req, res) => {
     res.render("contactus");
 });
 
+//--------admin login
+app.get("/admin-login", (req, res) => {
+    res.render("admin-login");
+});
+app.post("/admin-login", (req, res) => {
 
+    const { email } = req.body;
+
+    if (email === "khuranavansh79@gmail.com") {
+
+        return res.json({
+            success: true
+        });
+
+    }
+
+    res.json({
+        success: false
+    });
+
+});
 // ---------------- BOOKING HISTORY ----------------
 
 app.get("/booking-history", async (req, res) => {
