@@ -602,38 +602,44 @@ res.render("booking-history", {
 });
 
 });
-//------------------app.get("/admin/users",(req,res)=>{
-    if(!req.session.isAdmin){
+// admin users
+app.get("/admin/users", (req, res) => {
+    if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
     }
+
     res.render("admin-users");
+});
 
-
-app.get("/admin/barbers",(req,res)=>{
-    if(!req.session.isAdmin){
+app.get("/admin/barbers", (req, res) => {
+    if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
     }
+
     res.render("admin-barbers");
 });
 
-app.get("/admin/bookings",(req,res)=>{
-    if(!req.session.isAdmin){
+app.get("/admin/bookings", (req, res) => {
+    if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
     }
+
     res.render("admin-bookings");
 });
 
-app.get("/admin/revenue",(req,res)=>{
-    if(!req.session.isAdmin){
+app.get("/admin/revenue", (req, res) => {
+    if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
     }
+
     res.render("admin-revenue");
 });
 
-app.get("/admin/settings",(req,res)=>{
-    if(!req.session.isAdmin){
+app.get("/admin/settings", (req, res) => {
+    if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
     }
+
     res.render("admin-settings");
 });
 // ---------------- SERVER ----------------
