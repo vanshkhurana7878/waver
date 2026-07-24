@@ -607,7 +607,7 @@ res.render("booking-history", {
         return res.redirect("/admin-login");
     }
     res.render("admin-users");
-});
+
 
 app.get("/admin/barbers",(req,res)=>{
     if(!req.session.isAdmin){
