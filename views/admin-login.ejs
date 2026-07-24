@@ -42,7 +42,7 @@
     <h2 style="text-align:center;">🛡️ Admin Login</h2>
 
     <input type="email" id="email" placeholder="Enter Admin Email">
-
+<input type="password" id="password" placeholder="Enter Password">
     <button onclick="loginAdmin()">Login</button>
 
 </div>
@@ -58,7 +58,9 @@ async function loginAdmin(){
         headers:{
             "Content-Type":"application/json"
         },
-        body:JSON.stringify({email})
+        body:JSON.stringify({email,
+            Password
+        })
     });
 
     const data=await res.json();

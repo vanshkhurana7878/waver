@@ -511,9 +511,14 @@ app.get("/admin-login", (req, res) => {
 });
 app.post("/admin-login", (req, res) => {
 
-    const { email } = req.body;
+    const { email, password } = req.body;
 
-    if (email === "khuranavansh79@gmail.com") {
+    if (
+        email === "khuranavansh79@gmail.com" &&
+        password === process.env.ADMIN_PASSWORD
+    ) {
+
+        req.session.isAdmin = true;
 
         return res.json({
             success: true
