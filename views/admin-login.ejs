@@ -52,6 +52,8 @@
 async function loginAdmin(){
 
     const email=document.getElementById("email").value;
+     const password = document.getElementById("password").value;
+
 
     const res=await fetch("/admin-login",{
         method:"POST",
