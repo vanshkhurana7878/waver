@@ -504,7 +504,7 @@ app.get("/admin", async (req, res) => {
     const { count: totalUsers } = await supabase
         .from("customers")
         .select("*", { count: "exact", head: true })
-        .eq("role", "user");
+        
 
     const { count: totalBarbers } = await supabase
         .from("user")
@@ -644,7 +644,7 @@ app.get("/admin/users", async (req,res)=>{
     const { data, error } = await supabase
         .from("customers")
         .select("*")
-        .eq("role","user")
+        
         .order("created_at",{ascending:false});
 
 
