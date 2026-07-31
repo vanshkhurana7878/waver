@@ -273,7 +273,19 @@ if (session) {
 const result = await response.json();
 
 console.log("Server User:", result);
-
+//---saving
+await fetch("/save-customer", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        name: user.user_metadata.full_name || "User",
+        email: user.email,
+        auth_id: user.id,
+        avatar: user.user_metadata.avatar_url || null
+    })
+});
 }
 window.bookingHistory = function(){
 

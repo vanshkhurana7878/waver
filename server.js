@@ -128,6 +128,37 @@ app.post("/verify-email-otp", (req, res) => {
     }
 
 });
+//customer saver
+app.post("/save-customer", async (req, res) => {
+
+    const { name, email, auth_id, avatar } = req.body;
+
+    const { data: existingCustomer } = await supabase
+        .from("customers")
+        .select("id")
+        .eq("auth_id", auth_id)
+        .maybeSingle();
+
+    if (!existingCustomer) {
+
+        const { error } = await supabase
+            .from("customers")
+            .insert({
+                auth_id,
+                name,
+                email,
+                avatar
+            });
+
+        if (error) {
+            console.log(error);
+            return res.status(500).json({ success: false });
+        }
+    }
+
+    res.json({ success: true });
+
+});
 //--------------barber login logic
 app.post("/barber-send-otp", async (req, res) => {
 
