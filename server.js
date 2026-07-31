@@ -144,10 +144,10 @@ app.post("/save-customer", async (req, res) => {
         const { error } = await supabase
             .from("customers")
             .insert({
-                auth_id,
+                created_at,
                 name,
-                email,
-                avatar
+                email
+                
             });
 
         if (error) {
