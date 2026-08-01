@@ -9,7 +9,10 @@ const cookieParser = require("cookie-parser");
 const { Resend } = require("resend");
 //------------fcm 
 const admin = require("firebase-admin");
-const serviceAccount = require("./waver-503205-firebase-adminsdk-fbsvc-f5dabec76e.json");
+
+const serviceAccount = JSON.parse(
+    process.env.FIREBASE_SERVICE_ACCOUNT
+);
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
