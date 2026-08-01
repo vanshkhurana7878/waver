@@ -2,154 +2,576 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<title>Barber Dashboard | Waver</title>
-<link rel="stylesheet" href="/css/style.css">
+<title>Waver Barber Dashboard</title>
+
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+
 <style>
+
+*{
+    box-sizing:border-box;
+}
+
 body{
     margin:0;
-    background:#000;
+    background:#050505;
     color:white;
-    font-family:Arial;
+    font-family:'Inter',sans-serif;
 }
+
+
+/* Navbar */
 
 nav{
-    background:#111;
-    padding:20px;
-    border-bottom:1px solid #333;
+
+    height:75px;
+    background:#0d0d0d;
+    display:flex;
+    align-items:center;
+    padding:0 30px;
+    border-bottom:1px solid #222;
 }
+
+.logo{
+    width:120px;
+}
+
+
+/* Main */
 
 .container{
-    width:90%;
+
+    width:92%;
     margin:30px auto;
+
 }
+
+
+/* Welcome */
+
+.welcome{
+
+    background:linear-gradient(135deg,#111,#1b1b1b);
+    padding:25px;
+    border-radius:22px;
+    margin-bottom:30px;
+}
+
+.welcome h1{
+    margin:0;
+    font-size:30px;
+}
+
+
+.welcome p{
+    color:#aaa;
+}
+
+
+/* Stats */
+
+
+.stats{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(200px,1fr));
+gap:20px;
+margin-bottom:30px;
+
+}
+
+
+.stat-card{
+
+background:#111;
+padding:20px;
+border-radius:18px;
+border:1px solid #222;
+
+}
+
+
+.stat-card h2{
+
+margin:0;
+font-size:28px;
+
+}
+
+
+.stat-card span{
+
+color:#888;
+
+}
+
+
+
+/* Booking */
 
 .card{
-    background:#111;
-    border:1px solid #333;
-    border-radius:10px;
-    padding:20px;
-    margin-bottom:20px;
+
+background:#111;
+border:1px solid #242424;
+border-radius:22px;
+padding:25px;
+margin-bottom:20px;
+animation:show .4s ease;
+
 }
+
+
+@keyframes show{
+
+from{
+opacity:0;
+transform:translateY(20px);
+}
+
+to{
+opacity:1;
+}
+
+}
+
+
+
+.booking-header{
+
+display:flex;
+justify-content:space-between;
+align-items:center;
+
+}
+
+
+
+.booking-id{
+
+color:#777;
+font-size:14px;
+
+}
+
+
+/* Status */
+
+
+.status{
+
+padding:7px 15px;
+border-radius:20px;
+background:#332800;
+color:#ffc107;
+font-size:13px;
+
+}
+
+
+
+/* Details */
+
+.detail{
+
+margin:12px 0;
+color:#ccc;
+
+}
+
+.detail b{
+
+color:white;
+
+}
+
+
+
+/* Buttons */
+
+
+.actions{
+
+margin-top:25px;
+
+}
+
 
 button{
-    padding:10px 20px;
-    border:none;
-    border-radius:6px;
-    cursor:pointer;
-    font-weight:bold;
-    margin-right:10px;
+
+border:none;
+padding:13px 25px;
+border-radius:12px;
+font-weight:700;
+cursor:pointer;
+font-size:15px;
+transition:.3s;
+
 }
+
 
 .accept{
-    background:#00c853;
-    color:white;
+
+background:#00d26a;
+color:white;
+
 }
 
-.reject{
-    background:#ff1744;
-    color:white;
+
+.accept:hover{
+
+transform:scale(1.05);
+box-shadow:0 0 20px #00d26a;
+
 }
+
+
+.reject{
+
+background:#ff1744;
+color:white;
+
+}
+
+
+.reject:hover{
+
+transform:scale(1.05);
+box-shadow:0 0 20px #ff1744;
+
+}
+
+
+
+/* Mobile */
+
+@media(max-width:600px){
+
+.container{
+
+width:94%;
+
+}
+
+
+.booking-header{
+
+flex-direction:column;
+align-items:flex-start;
+gap:10px;
+
+}
+
+
+button{
+
+width:100%;
+margin-bottom:10px;
+
+}
+
+}
+
+
 </style>
 
 </head>
+
+
 <body>
 
+
 <nav>
-      <img src="/images/waver.png" alt="Waver Logo" class="logo">
+
+<img src="/images/waver.png" class="logo">
+
 </nav>
+
+
 
 <div class="container">
 
+
+<div class="welcome">
+
+<h1>👋 Welcome Barber</h1>
+
+<p>Manage your bookings and grow your business with Waver</p>
+
+</div>
+
+
+
+<div class="stats">
+
+
+<div class="stat-card">
+
+<span>Today's Bookings</span>
+
+<h2><%= bookings.length %></h2>
+
+</div>
+
+
+
+<div class="stat-card">
+
+<span>Status</span>
+
+<h2 style="color:#00d26a">
+Online
+</h2>
+
+</div>
+
+
+
+<div class="stat-card">
+
+<span>Platform</span>
+
+<h2>Waver</h2>
+
+</div>
+
+
+</div>
+
+
+
+
 <% if(bookings.length===0){ %>
 
-<h3>No Pending Bookings</h3>
-
-<% } %>
-
-<% bookings.forEach(function(booking){ %>
 
 <div class="card">
 
-<h3>Booking #<%= booking.id %></h3>
+<h2>No Pending Bookings 🎉</h2>
 
-<p><b>Service:</b> <%= booking.services[0].name %></p>
-
-<p><b>Price:</b> ₹<%= booking.total_price %></p>
-
-<p><b>Payment:</b> <%= booking.payment_method %></p>
-
-<p><b>Status:</b> <%= booking.status %></p>
-
-<button class="accept" onclick="acceptBooking('<%= booking.id %>')">
-    Accept
-</button>
-
-<button class="reject" onclick="rejectBooking('<%= booking.id %>')">
-    Reject
-</button>
+<p style="color:#888">
+New customer requests will appear here.
+</p>
 
 </div>
+
+
+<% } %>
+
+
+
+
+
+<% bookings.forEach(function(booking){ %>
+
+
+<div class="card">
+
+
+<div class="booking-header">
+
+
+<div>
+
+<h2>
+💈 New Booking
+</h2>
+
+<p class="booking-id">
+ID: #<%= booking.id %>
+</p>
+
+</div>
+
+
+
+<div class="status">
+
+<%= booking.status %>
+
+</div>
+
+
+</div>
+
+
+
+
+<div class="detail">
+
+<b>Service:</b>
+
+<%= booking.services[0].name %>
+
+</div>
+
+
+
+<div class="detail">
+
+<b>Price:</b>
+
+₹<%= booking.total_price %>
+
+</div>
+
+
+
+<div class="detail">
+
+<b>Payment:</b>
+
+<%= booking.payment_method %>
+
+</div>
+
+
+
+<div class="actions">
+
+
+<button class="accept"
+onclick="acceptBooking('<%= booking.id %>')">
+
+✓ Accept Booking
+
+</button>
+
+
+
+<button class="reject"
+onclick="rejectBooking('<%= booking.id %>')">
+
+✕ Reject
+
+</button>
+
+
+</div>
+
+
+
+</div>
+
 
 <% }) %>
 
+
+
+
 </div>
+
+
+
+
+
 <script>
+
+
 const notificationSound = new Audio("/sounds/notification.mp3");
+
+
+
 async function acceptBooking(id){
 
-    const res = await fetch("/accept-booking/" + id,{
-        method:"POST"
-    });
 
-    const data = await res.json();
+const res = await fetch("/accept-booking/"+id,{
+method:"POST"
+});
 
-    if(data.success){
-        location.reload();
-    }else{
-        alert("Failed");
-    }
+
+const data = await res.json();
+
+
+if(data.success){
+
+location.reload();
+
+}else{
+
+alert("Failed");
 
 }
+
+
+}
+
+
+
+
 
 async function rejectBooking(id){
 
-    const res = await fetch("/reject-booking/" + id,{
-        method:"POST"
-    });
 
-    const data = await res.json();
+const res = await fetch("/reject-booking/"+id,{
+method:"POST"
+});
 
-    if(data.success){
-        location.reload();
-    }else{
-        alert("Failed");
-    }
+
+const data = await res.json();
+
+
+if(data.success){
+
+location.reload();
+
+}else{
+
+alert("Failed");
 
 }
-let lastBookingCount = "<%= bookings.length %>";
 
-setInterval(async () => {
 
-    const res = await fetch("/pending-bookings");
-    const bookings = await res.json();
+}
 
-    if (bookings.length > lastBookingCount) {
 
-        notificationSound.play();
 
-        if (navigator.vibrate) {
-            navigator.vibrate([300,100,300]);
-        }
 
-        alert("🔔 New Booking Received!");
 
-        location.reload();
+let lastBookingCount="<%= bookings.length %>";
 
-    }
 
-    lastBookingCount = bookings.length;
 
-}, 2000);
+setInterval(async()=>{
+
+
+const res=await fetch("/pending-bookings");
+
+const bookings=await res.json();
+
+
+
+if(bookings.length > lastBookingCount){
+
+
+notificationSound.play();
+
+
+if(navigator.vibrate){
+
+navigator.vibrate([300,100,300]);
+
+}
+
+
+alert("🔔 New Booking Received!");
+
+
+location.reload();
+
+
+}
+
+
+lastBookingCount=bookings.length;
+
+
+
+},2000);
+
+
+
 </script>
+
+
+
 </body>
 </html>
