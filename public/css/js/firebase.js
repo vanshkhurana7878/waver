@@ -1,12 +1,50 @@
-import { initializeApp } from "firebase/app";
-import { getAuth } from "firebase/auth";
+import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
+import {
+  getMessaging,
+  getToken
+} from "https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging.js";
 
 const firebaseConfig = {
-  apiKey: "YOUR_KEY",
-  authDomain: "YOUR_DOMAIN",
-  projectId: "YOUR_ID",
-  appId: "YOUR_APP_ID"
+ apiKey: "AIzaSyAFZJJuzNYu4PzcUPmAhF1KRYjENAy-aU4",
+  authDomain: "waver-503205.firebaseapp.com",
+  projectId: "waver-503205",
+  storageBucket: "waver-503205.firebasestorage.app",
+  messagingSenderId: "1060032405440",
+  appId: "1:1060032405440:web:c4586e5a730154222f3225"
+  
+  
 };
 
 const app = initializeApp(firebaseConfig);
-export const auth = getAuth(app);
+const messaging = getMessaging(app);
+
+async function requestPermission() {
+  const permission = await Notification.requestPermission();
+
+  if (permission === "granted") {
+    const token = await getToken(messaging, {
+      vapidKey: "BO-YHD22eh7VQfDcd-QOwAB-78zo-ObGgrI6MaCLMZdDtTn5To-PkM4kYqeVd-rsL9MoWhhe3YHL-bVj530yy7s"
+    });
+
+    console.log("FCM Token:", token);
+const email = document.getElementById("userEmail").innerText;
+
+await fetch("/save-fcm-token", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        email,
+        fcm_token: token
+    })
+});
+
+console.log("FCM Token Saved");
+    // Agle step me is token ko server par bhejenge
+  } else {
+    console.log("Notification permission denied");
+  }
+}
+
+requestPermission();

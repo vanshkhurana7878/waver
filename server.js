@@ -159,6 +159,28 @@ app.post("/save-customer", async (req, res) => {
     res.json({ success: true });
 
 });
+//-----------FCM TOKEN SAVE 
+app.post("/save-fcm-token", async (req, res) => {
+
+    const { email, fcm_token } = req.body;
+
+    const { error } = await supabase
+        .from("customers")
+        .update({ fcm_token })
+        .eq("email", email);
+
+    if (error) {
+        console.log(error);
+        return res.status(500).json({
+            success: false
+        });
+    }
+
+    res.json({
+        success: true
+    });
+
+});
 //--------------barber login logic
 app.post("/barber-send-otp", async (req, res) => {
 
