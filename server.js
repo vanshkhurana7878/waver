@@ -1,7 +1,7 @@
 const express = require("express");
 const path = require("path");
 const dotenv = require("dotenv");
-
+dotenv.config();
 const Razorpay = require("razorpay");
 const session = require("express-session");
 const cookieParser = require("cookie-parser");
@@ -12,8 +12,10 @@ const admin = require("firebase-admin");
 
 const serviceAccount = JSON.parse(
     process.env.FIREBASE_SERVICE_ACCOUNT
-);
 
+);
+console.log(process.env.FIREBASE_SERVICE_ACCOUNT);
+console.log(admin.credential);
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount)
 });
@@ -23,7 +25,7 @@ const razorpay = new Razorpay({
     key_secret: process.env.RAZORPAY_KEY_SECRET
 });//-----
 
-dotenv.config();
+// dotenconfig
 console.log("SUPABASE URL:", process.env.SUPABASE_URL);
 const { createClient } = require("@supabase/supabase-js");
 
