@@ -8,16 +8,13 @@ const cookieParser = require("cookie-parser");
 
 const { Resend } = require("resend");
 //------------fcm 
-const admin = require("firebase-admin");
+const { initializeApp, cert } = require("firebase-admin/app");
+const { getMessaging } = require("firebase-admin/messaging");
 
-const serviceAccount = JSON.parse(
-    process.env.FIREBASE_SERVICE_ACCOUNT
+const serviceAccount = JSON.parse(process.env.FIREBASE_SERVICE_ACCOUNT);
 
-);
-console.log(process.env.FIREBASE_SERVICE_ACCOUNT);
-console.log(admin.credential);
-admin.initializeApp({
-    credential: admin.credential.cert(serviceAccount)
+initializeApp({
+    credential: cert(serviceAccount)
 });
 //---razorpay
 const razorpay = new Razorpay({
@@ -227,7 +224,7 @@ app.post("/send-notification", async (req, res) => {
         tokens
     };
 
-    const response = await admin.messaging().sendEachForMulticast(message);
+    const response = await getMessaging().sendEachForMulticast(message);
 
     res.json({
         success: true,
