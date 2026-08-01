@@ -7,6 +7,13 @@ const session = require("express-session");
 const cookieParser = require("cookie-parser");
 
 const { Resend } = require("resend");
+//------------fcm 
+const admin = require("firebase-admin");
+const serviceAccount = require("./waver-503205-firebase-adminsdk-fbsvc-f5dabec76e.json");
+
+admin.initializeApp({
+    credential: admin.credential.cert(serviceAccount)
+});
 //---razorpay
 const razorpay = new Razorpay({
     key_id: process.env.RAZORPAY_KEY_ID,
@@ -178,6 +185,49 @@ app.post("/save-fcm-token", async (req, res) => {
 
     res.json({
         success: true
+    });
+
+});
+//fcm mesagging testing 
+app.post("/send-notification", async (req, res) => {
+
+    const { title, body } = req.body;
+
+    const { data: customers, error } = await supabase
+        .from("customers")
+        .select("fcm_token")
+        .not("fcm_token", "is", null);
+
+    if (error) {
+        console.log(error);
+        return res.status(500).json({ success: false });
+    }
+
+    const tokens = customers
+        .map(c => c.fcm_token)
+        .filter(Boolean);
+
+    if (tokens.length === 0) {
+        return res.json({
+            success: false,
+            message: "No FCM tokens found"
+        });
+    }
+
+    const message = {
+        notification: {
+            title,
+            body
+        },
+        tokens
+    };
+
+    const response = await admin.messaging().sendEachForMulticast(message);
+
+    res.json({
+        success: true,
+        sent: response.successCount,
+        failed: response.failureCount
     });
 
 });

@@ -1,7 +1,8 @@
 import { initializeApp } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-app.js";
 import {
   getMessaging,
-  getToken
+  getToken,
+  onmessage
 } from "https://www.gstatic.com/firebasejs/12.0.0/firebase-messaging.js";
 
 const firebaseConfig = {
@@ -48,3 +49,21 @@ console.log("FCM Token Saved");
 }
 
 requestPermission();
+// Foreground notification
+onMessage(messaging, (payload) => {
+
+    console.log("Foreground Notification:", payload);
+
+    if (Notification.permission === "granted") {
+
+        new Notification(
+            payload.notification.title,
+            {
+                body: payload.notification.body,
+                icon: payload.notification.icon || "/images/waver.png"
+            }
+        );
+
+    }
+
+});

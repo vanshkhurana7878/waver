@@ -175,7 +175,40 @@ th{
 <p>Total Bookings</p>
 <h2><%= totalBookings %></h2>
 </div>
+//notifications fcm
+<div class="table-box">
 
+    <h2 style="margin-bottom:20px;">📢 Send Push Notification</h2>
+
+    <input
+        type="text"
+        id="title"
+        placeholder="Notification Title"
+        style="width:100%;padding:12px;margin-bottom:15px;"
+    >
+
+    <textarea
+        id="body"
+        placeholder="Notification Message"
+        style="width:100%;padding:12px;height:120px;"
+    ></textarea>
+
+    <button
+        onclick="sendNotification()"
+        style="
+        margin-top:20px;
+        padding:14px;
+        width:100%;
+        background:#111;
+        color:white;
+        border:none;
+        border-radius:10px;
+        cursor:pointer;">
+        🚀 Send Notification
+    </button>
+
+</div>
+//
 <div class="card">
 <p>Revenue</p>
 <h2>₹ <%= revenue %></h2>
@@ -226,6 +259,47 @@ th{
 </div>
 
 </div>
+<script>
 
+async function sendNotification(){
+
+    const title = document.getElementById("title").value;
+    const body = document.getElementById("body").value;
+
+    if(!title || !body){
+        alert("Fill all fields");
+        return;
+    }
+
+    const res = await fetch("/send-notification",{
+        method:"POST",
+        headers:{
+            "Content-Type":"application/json"
+        },
+        body:JSON.stringify({
+            title,
+            body
+        })
+    });
+
+    const data = await res.json();
+
+    if(data.success){
+
+        alert(
+            "✅ Notification Sent\n\n" +
+            "Success : " + data.sent +
+            "\nFailed : " + data.failed
+        );
+
+    }else{
+
+        alert(data.message || "Failed");
+
+    }
+
+}
+
+</script>
 </body>
 </html>
