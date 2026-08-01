@@ -136,7 +136,7 @@ app.post("/save-customer", async (req, res) => {
     const { data: existingCustomer } = await supabase
         .from("customers")
         .select("id")
-        .eq("auth_id", auth_id)
+        .eq("email", email)
         .maybeSingle();
 
     if (!existingCustomer) {
