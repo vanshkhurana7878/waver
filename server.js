@@ -808,6 +808,57 @@ const { count: barbers } = await supabase
     });
 
 });
+//------------admin-barber management
+app.get("/admin/barber-management", async (req, res) => {
+
+    if (!req.session.isAdmin) {
+        return res.redirect("/admin-login");
+    }
+
+    const { data: barbers, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("role", "barber")
+        .order("id");
+
+    if (error) {
+        console.log(error);
+        return res.send("Error");
+    }
+
+    res.render("admin-barber-management", {
+        barbers
+    });
+
+});
+//--------------add barber 
+app.post("/add-barber", async (req, res) => {
+
+    if (!req.session.isAdmin) {
+        return res.redirect("/admin-login");
+    }
+
+    const { name, email, phone } = req.body;
+
+    const { error } = await supabase
+        .from("user")
+        .insert([
+            {
+                name,
+                email,
+                phone,
+                role: "barber"
+            }
+        ]);
+
+    if (error) {
+        console.log(error);
+        return res.send("Failed to add barber");
+    }
+
+    res.redirect("/admin/barber-management");
+
+});
 // ---------------- SERVER ----------------
 
 const PORT = process.env.PORT || 3000;
