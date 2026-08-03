@@ -764,15 +764,23 @@ app.get("/admin/bookings", (req, res) => {
 
     res.render("admin-bookings");
 });
+//revenue graph
+app.get("/admin/revenue", async (req, res) => {
 
-app.get("/admin/revenue", (req, res) => {
     if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
     }
 
-    res.render("admin-revenue");
-});
+    const { data } = await supabase
+        .from("bookings")
+        .select("*");
 
+    res.render("admin-revenue", {
+        bookings: data
+    });
+
+});
+//--------settings
 app.get("/admin/settings", (req, res) => {
     if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
