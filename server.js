@@ -788,6 +788,26 @@ app.get("/admin/settings", (req, res) => {
 
     res.render("admin-settings");
 });
+//database admin ----
+app.get("/admin/database", async (req, res) => {
+
+    if (!req.session.isAdmin) {
+        return res.redirect("/admin-login");
+    }
+
+    const { count: customers } = await supabase
+        .from("customers")
+        .select("*", { count: "exact", head: true });
+const { count: barbers } = await supabase
+    .from("user")
+    .select("*", { count: "exact", head: true })
+    .eq("role", "barber");
+    res.render("admin-database", {
+        customers,
+        barbers
+    });
+
+});
 // ---------------- SERVER ----------------
 
 const PORT = process.env.PORT || 3000;

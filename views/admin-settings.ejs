@@ -1,1 +1,174 @@
-<h1>Settings Page</h1>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+
+<meta charset="UTF-8">
+<title>Waver Admin Settings</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,Helvetica,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+padding:40px;
+}
+
+h1{
+font-size:36px;
+margin-bottom:35px;
+}
+
+.grid{
+
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(280px,1fr));
+gap:25px;
+
+}
+
+.card{
+
+background:#1e293b;
+border:1px solid rgba(255,255,255,.08);
+border-radius:18px;
+padding:30px;
+cursor:pointer;
+
+transition:.35s;
+
+}
+
+.card:hover{
+
+transform:translateY(-8px);
+
+border-color:#3b82f6;
+
+box-shadow:0 0 30px rgba(59,130,246,.35);
+
+}
+
+.icon{
+
+font-size:55px;
+
+margin-bottom:20px;
+
+}
+
+.title{
+
+font-size:24px;
+
+font-weight:bold;
+
+margin-bottom:12px;
+
+}
+
+.desc{
+
+color:#94a3b8;
+
+line-height:26px;
+
+font-size:15px;
+
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>⚙️ Settings</h1>
+
+<div class="grid">
+
+<div class="card" onclick="location.href='/admin/database'">
+
+<div class="icon">🗄️</div>
+
+<div class="title">
+Database Management
+</div>
+
+<div class="desc">
+
+Customers<br>
+Bookings<br>
+Database Status
+
+</div>
+
+</div>
+
+
+<div class="card" onclick="location.href='/admin/barber-management'">
+
+<div class="icon">💈</div>
+
+<div class="title">
+Barber Management
+</div>
+
+<div class="desc">
+
+Add Barber<br>
+Edit Barber<br>
+Remove Barber
+
+</div>
+
+</div>
+
+
+<div class="card" onclick="location.href='/admin/security'">
+
+<div class="icon">🔐</div>
+
+<div class="title">
+Security
+</div>
+
+<div class="desc">
+
+Admin Password<br>
+Admin Email<br>
+Sessions
+
+</div>
+
+</div>
+
+
+<div class="card" onclick="location.href='/admin/user-management'">
+
+<div class="icon">👤</div>
+
+<div class="title">
+User Management
+</div>
+
+<div class="desc">
+
+Ban User<br>
+Unban User<br>
+View Users
+
+</div>
+
+</div>
+
+</div>
+
+</body>
+</html>
