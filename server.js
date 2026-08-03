@@ -844,7 +844,7 @@ app.post("/add-barber", async (req, res) => {
         .from("user")
         .insert([
             {
-                name,
+                Shop_name,
                 email,
                 phone,
                 role: "barber"
