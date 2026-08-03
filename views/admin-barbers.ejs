@@ -1,1 +1,75 @@
-<h1>Barbers Page</h1>
+<!DOCTYPE html>
+<html>
+
+<head>
+
+<title>Barbers | Waver Admin</title>
+
+<style>
+
+body{
+    background:#111;
+    color:white;
+    font-family:Arial;
+    padding:30px;
+}
+
+table{
+    width:100%;
+    background:#1c1c1c;
+    border-collapse:collapse;
+}
+
+th,td{
+    padding:15px;
+    border-bottom:1px solid #333;
+    text-align:left;
+}
+
+th{
+    background:black;
+}
+
+</style>
+
+</head>
+
+<body>
+
+<h1>💈 Waver Barbers</h1>
+
+<table>
+
+<tr>
+    <th>id</th>
+    <th>Shop_name</th>
+    <th>Email</th>
+    <th>address</th>
+    <th>Price</th>
+    <th>created_at</th>
+</tr>
+
+<% barbers.forEach(barber => { %>
+
+<tr>
+
+    <td><%= barber.id %></td>
+
+    <td><%= barber.Shop_name %></td>
+
+    <td><%= barber.email %></td>
+
+    <td><%= barber.address %></td>
+
+    <td>₹<%= barber.price %></td>
+
+    <td><%= barber.created_at || "-" %></td>
+
+</tr>
+
+<% }) %>
+
+</table>
+
+</body>
+</html>

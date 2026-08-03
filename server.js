@@ -734,12 +734,27 @@ app.get("/admin/users", async (req,res)=>{
 
 });
 //admin barbers
-app.get("/admin/barbers", (req, res) => {
+app.get("/admin/barbers", async (req, res) => {
+
     if (!req.session.isAdmin) {
         return res.redirect("/admin-login");
     }
 
-    res.render("admin-barbers");
+    const { data, error } = await supabase
+        .from("user")
+        .select("*")
+        .eq("role", "barber")
+        .order("created_at", { ascending: false });
+
+    if (error) {
+        console.log(error);
+        return res.send("Error loading barbers");
+    }
+
+    res.render("admin-barbers", {
+        barbers: data
+    });
+
 });
 
 app.get("/admin/bookings", (req, res) => {
