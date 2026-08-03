@@ -1,30 +1,17 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 <head>
-
 <meta charset="UTF-8">
-<title>Revenue Dashboard | Waver Admin</title>
+<title>Revenue Dashboard</title>
 
 <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
 
 <style>
-
-*{
-margin:0;
-padding:0;
-box-sizing:border-box;
-font-family:Arial,Helvetica,sans-serif;
-}
-
 body{
-background:#0b0f19;
+background:#111;
 color:white;
-padding:35px;
-}
-
-h1{
-font-size:34px;
-margin-bottom:35px;
+font-family:Arial;
+padding:30px;
 }
 
 .cards{
@@ -35,281 +22,76 @@ margin-bottom:30px;
 }
 
 .card{
-
-background:rgba(255,255,255,.04);
-
-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:18px;
-
-padding:25px;
-
-transition:.35s;
-
-box-shadow:0 10px 35px rgba(0,0,0,.45);
-
-}
-
-.card:hover{
-
-transform:translateY(-8px);
-
-border-color:#3b82f6;
-
-box-shadow:0 0 40px rgba(59,130,246,.45);
-
-}
-
-.card h3{
-
-color:#9ca3af;
-
-font-size:16px;
-
-margin-bottom:12px;
-
-}
-
-.card h2{
-
-font-size:34px;
-
-font-weight:bold;
-
-}
-
-.row{
-
-display:grid;
-
-grid-template-columns:2fr 1fr;
-
-gap:25px;
-
-margin-bottom:25px;
-
-}
-
-.box{
-
-background:rgba(255,255,255,.04);
-
-backdrop-filter:blur(18px);
-
-border:1px solid rgba(255,255,255,.08);
-
-border-radius:18px;
-
+background:#1d1d1d;
 padding:20px;
-
-box-shadow:0 10px 35px rgba(0,0,0,.45);
-
+border-radius:10px;
+text-align:center;
 }
 
-.box h2{
-
-margin-bottom:15px;
-
-font-size:20px;
-
-}
-
-#revenueChart{
-
-height:420px;
-
-}
-
-.bottom{
-
-display:grid;
-
-grid-template-columns:1fr 1fr;
-
-gap:25px;
-
-margin-top:25px;
-
-}
-
-#statusChart,
-#paymentChart{
-
-height:330px;
-
+.chart{
+background:#1d1d1d;
+padding:20px;
+border-radius:10px;
+margin-bottom:30px;
 }
 
 table{
-
 width:100%;
-
-margin-top:35px;
-
 border-collapse:collapse;
-
-background:rgba(255,255,255,.04);
-
-border-radius:15px;
-
-overflow:hidden;
-
+background:#1d1d1d;
 }
 
-th{
-
-background:#111827;
-
-padding:18px;
-
-text-align:left;
-
-}
-
-td{
-
-padding:16px;
-
-border-bottom:1px solid rgba(255,255,255,.06);
-
-}
-
-tr:hover{
-
-background:rgba(255,255,255,.03);
-
-}
-
-@media(max-width:1100px){
-
-.cards{
-
-grid-template-columns:repeat(2,1fr);
-
-}
-
-.row{
-
-grid-template-columns:1fr;
-
-}
-
-.bottom{
-
-grid-template-columns:1fr;
-
-}
-
-}
-
-@media(max-width:700px){
-
-.cards{
-
-grid-template-columns:1fr;
-
-}
-
-body{
-
+th,td{
 padding:15px;
-
+border-bottom:1px solid #333;
+text-align:left;
 }
-
-}
-
 </style>
 
 </head>
-
 <body>
 
-<h1>💰 Revenue Dashboard</h1>
+<h1>Revenue Dashboard</h1>
 
 <div class="cards">
 
 <div class="card">
-
 <h3>Total Revenue</h3>
-
-<h2 id="totalRevenue">₹0</h2>
-
+<h2 id="revenue">₹0</h2>
 </div>
 
 <div class="card">
-
-<h3>Today's Revenue</h3>
-
-<h2 id="todayRevenue">₹0</h2>
-
-</div>
-
-<div class="card">
-
-<h3>This Month</h3>
-
-<h2 id="monthRevenue">₹0</h2>
-
-</div>
-
-<div class="card">
-
 <h3>Total Bookings</h3>
+<h2><%= bookings.length %></h2>
+</div>
 
-<h2 id="bookingCount"><%= bookings.length %></h2>
+<div class="card">
+<h3>Confirmed</h3>
+<h2 id="confirmed">0</h2>
+</div>
 
+<div class="card">
+<h3>Pending</h3>
+<h2 id="pending">0</h2>
 </div>
 
 </div>
 
-<div class="row">
-
-<div class="box">
-
-<h2>Revenue Trend</h2>
-
-<div id="revenueChart"></div>
-
+<div class="chart">
+<div id="chart"></div>
 </div>
 
-<div class="box">
-
-<h2>Booking Status</h2>
-
-<div id="statusChart"></div>
-
-</div>
-
-</div>
-
-<div class="bottom">
-
-<div class="box">
-
-<h2>Payment Methods</h2>
-
-<div id="paymentChart"></div>
-
-</div>
-
-<div class="box">
-
-<h2>Recent Transactions</h2>
+<h2>Recent Bookings</h2>
 
 <table>
 
 <tr>
-
 <th>User</th>
-
 <th>Amount</th>
-
 <th>Status</th>
-
 </tr>
 
-<% bookings.slice(0,8).forEach(b=>{ %>
+<% bookings.forEach(b=>{ %>
 
 <tr>
 
@@ -325,238 +107,68 @@ padding:15px;
 
 </table>
 
-</div>
-
-</div>
-
-<!-- PART 2 WILL COME HERE -->
 <script>
 
-const bookings = "<%- JSON.stringify(bookings) %>";
+const bookings="<%- JSON.stringify(bookings) %>";
 
-let totalRevenue = 0;
-let todayRevenue = 0;
-let monthRevenue = 0;
+let revenue=0;
+let confirmed=0;
+let pending=0;
 
-const today = new Date();
-
-const revenuePerDay = {};
-const status = {
-    confirmed:0,
-    pending:0,
-    rejected:0
-};
-
-const payments = {};
+const days={};
 
 bookings.forEach(b=>{
 
-    const amount = Number(b.total_price)||0;
+if(b.status==="confirmed"){
 
-    const date = new Date(b.created_at);
+confirmed++;
 
-    status[b.status] = (status[b.status]||0)+1;
+revenue+=Number(b.total_price);
 
-    payments[b.payment_method] =
-    (payments[b.payment_method]||0)+1;
+const d=new Date(b.created_at).toLocaleDateString();
 
-    if(b.status==="confirmed"){
+days[d]=(days[d]||0)+Number(b.total_price);
 
-        totalRevenue += amount;
+}
 
-        if(
-            date.getDate()===today.getDate() &&
-            date.getMonth()===today.getMonth() &&
-            date.getFullYear()===today.getFullYear()
-        ){
+if(b.status==="pending"){
 
-            todayRevenue += amount;
+pending++;
 
-        }
-
-        if(
-            date.getMonth()===today.getMonth() &&
-            date.getFullYear()===today.getFullYear()
-        ){
-
-            monthRevenue += amount;
-
-        }
-
-        const key =
-        date.toLocaleDateString("en-IN",{
-            day:"2-digit",
-            month:"short"
-        });
-
-        revenuePerDay[key] =
-        (revenuePerDay[key]||0)+amount;
-
-    }
+}
 
 });
 
-document.getElementById("totalRevenue").innerHTML =
-"₹"+totalRevenue.toLocaleString();
+document.getElementById("revenue").innerHTML="₹"+revenue;
 
-document.getElementById("todayRevenue").innerHTML =
-"₹"+todayRevenue.toLocaleString();
+document.getElementById("confirmed").innerHTML=confirmed;
 
-document.getElementById("monthRevenue").innerHTML =
-"₹"+monthRevenue.toLocaleString();
+document.getElementById("pending").innerHTML=pending;
 
-
-// =================== Revenue Chart ===================
-
-new ApexCharts(
-
-document.querySelector("#revenueChart"),
-
-{
+new ApexCharts(document.querySelector("#chart"),{
 
 chart:{
-type:"area",
-height:420,
-toolbar:{show:false},
-zoom:{enabled:false}
-},
-
-theme:{
-mode:"dark"
-},
-
-colors:["#3B82F6"],
-
-stroke:{
-curve:"smooth",
-width:5
-},
-
-fill:{
-type:"gradient",
-gradient:{
-shade:"dark",
-opacityFrom:.65,
-opacityTo:.05
-}
-},
-
-grid:{
-borderColor:"#222"
+type:"line",
+height:350
 },
 
 series:[{
 
 name:"Revenue",
 
-data:Object.values(revenuePerDay)
+data:Object.values(days)
 
 }],
 
 xaxis:{
 
-categories:Object.keys(revenuePerDay)
-
-},
-
-tooltip:{
-theme:"dark"
-}
+categories:Object.keys(days)
 
 }
 
-).render();
-
-
-// =================== Status ===================
-
-new ApexCharts(
-
-document.querySelector("#statusChart"),
-
-{
-
-chart:{
-type:"donut",
-height:330
-},
-
-theme:{
-mode:"dark"
-},
-
-labels:[
-"Confirmed",
-"Pending",
-"Rejected"
-],
-
-series:[
-status.confirmed,
-status.pending,
-status.rejected
-],
-
-colors:[
-"#10B981",
-"#F59E0B",
-"#EF4444"
-],
-
-legend:{
-position:"bottom"
-}
-
-}
-
-).render();
-
-
-// =================== Payment ===================
-
-new ApexCharts(
-
-document.querySelector("#paymentChart"),
-
-{
-
-chart:{
-type:"bar",
-height:330,
-toolbar:{show:false}
-},
-
-theme:{
-mode:"dark"
-},
-
-plotOptions:{
-bar:{
-borderRadius:10,
-horizontal:false
-}
-},
-
-colors:["#6366F1"],
-
-series:[{
-
-name:"Payments",
-
-data:Object.values(payments)
-
-}],
-
-xaxis:{
-
-categories:Object.keys(payments)
-
-}
-
-}
-
-).render();
+}).render();
 
 </script>
+
 </body>
 </html>
