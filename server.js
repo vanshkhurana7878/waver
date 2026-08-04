@@ -859,6 +859,108 @@ app.post("/add-barber", async (req, res) => {
     res.redirect("/admin/barber-management");
 
 });
+//------------bannned user 
+app.post("/toggle-ban/:id", async (req, res) => {
+
+    if (!req.session.isAdmin) {
+        return res.redirect("/admin-login");
+    }
+
+    const { id } = req.params;
+
+    const { data: user, error } = await supabase
+        .from("customers")
+        .select("is_banned")
+        .eq("id", id)
+        .single();
+
+    if (error) {
+        console.log(error);
+        return res.send("User not found");
+    }
+
+    const { error: updateError } = await supabase
+        .from("customers")
+        .update({
+            is_banned: !user.is_banned
+        })
+        .eq("id", id);
+
+    if (updateError) {
+        console.log(updateError);
+        return res.send("Update failed");
+    }
+
+    res.redirect("/admin/users");
+
+});
+//------------ban unban
+
+app.post("/ban-user", async (req, res) => {
+
+    if (!req.session.isAdmin) {
+        return res.redirect("/admin-login");
+    }
+
+    const { id, days } = req.body;
+
+    let bannedUntil = null;
+    let isBanned = true;
+
+    if (days != "99999") {
+
+        bannedUntil = new Date();
+
+        bannedUntil.setDate(
+            bannedUntil.getDate() + Number(days)
+        );
+
+    }
+
+    const { error } = await supabase
+        .from("customers")
+        .update({
+            is_banned: isBanned,
+            banned_until: bannedUntil
+        })
+        .eq("id", id);
+
+    if (error) {
+
+        console.log(error);
+
+        return res.send("Ban failed");
+
+    }
+
+    res.redirect("/admin/users");
+
+});
+//------------unban 
+app.post("/unban-user/:id", async (req, res) => {
+
+    const { id } = req.params;
+
+    const { error } = await supabase
+        .from("customers")
+        .update({
+            is_banned: false,
+            banned_until: null
+        })
+        .eq("id", id);
+
+    if (error) {
+
+        console.log(error);
+
+        return res.send("Unban failed");
+
+    }
+
+    res.redirect("/admin/users");
+
+});
+
 // ---------------- SERVER ----------------
 
 const PORT = process.env.PORT || 3000;
