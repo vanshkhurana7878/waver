@@ -28,7 +28,17 @@ async function requestPermission() {
     });
 
     console.log("FCM Token:", token);
-const email = document.getElementById("userEmail").innerText;
+const tokenAuth = localStorage.getItem("access_token");
+
+const response = await fetch("/api/me", {
+    headers: {
+        Authorization: "Bearer " + tokenAuth
+    }
+});
+
+const result = await response.json();
+
+const email = result.user.email;
 
 await fetch("/save-fcm-token", {
     method: "POST",
