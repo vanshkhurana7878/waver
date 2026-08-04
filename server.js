@@ -367,7 +367,39 @@ if(userError || !user){
         message:"Invalid user"
     });
 }
+//
+const { data: customer } = await supabase
+    .from("customers")
+    .select("is_banned, banned_until")
+    .eq("email", user.email)
+    .single();
 
+if (customer?.is_banned) {
+
+    if (
+        customer.banned_until &&
+        new Date(customer.banned_until) <= new Date()
+    ) {
+
+        // Ban expire ho gaya
+        await supabase
+            .from("customers")
+            .update({
+                is_banned: false,
+                banned_until: null
+            })
+            .eq("email", user.email);
+
+    } else {
+
+        return res.status(403).json({
+            success: false,
+            message: "Your account is suspended. Booking is not allowed."
+        });
+
+    }
+}
+//
     const {
         barber_id,
         services,
