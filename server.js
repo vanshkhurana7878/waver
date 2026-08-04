@@ -838,7 +838,7 @@ app.post("/add-barber", async (req, res) => {
         return res.redirect("/admin-login");
     }
 
-    const { name, email, phone } = req.body;
+    const { name, email, phone, Shop_name } = req.body;
 
     const { error } = await supabase
         .from("user")
