@@ -870,7 +870,7 @@ app.post("/add-barber", async (req, res) => {
         return res.redirect("/admin-login");
     }
 
-    const { name, email, phone, Shop_name } = req.body;
+    const { name, email, phone, Shop_name , latitude, longitude } = req.body;
 
     const { error } = await supabase
         .from("user")
@@ -879,6 +879,8 @@ app.post("/add-barber", async (req, res) => {
                 Shop_name,
                 email,
                 phone,
+                latitude,
+                longitude,
                 role: "barber"
             }
         ]);

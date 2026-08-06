@@ -165,6 +165,26 @@ style="width:100%;padding:12px;margin-top:15px;"
 >
 
 <button
+type="button"
+onclick="getLocation()"
+style="margin-top:15px;width:100%;background:#16a34a;"
+>
+📍 Detect Shop Location
+</button>
+
+<input
+type="hidden"
+name="latitude"
+id="latitude"
+>
+
+<input
+type="hidden"
+name="longitude"
+id="longitude"
+>
+
+<button
 type="submit"
 style="margin-top:20px;width:100%;"
 >
@@ -196,6 +216,35 @@ function closeModal(){
 document.getElementById("modal").style.display="none";
 
 }
+
+function getLocation(){
+
+    if(!navigator.geolocation){
+
+        alert("Geolocation not supported");
+
+        return;
+
+    }
+
+    navigator.geolocation.getCurrentPosition(function(position){
+
+        document.getElementById("latitude").value =
+        position.coords.latitude;
+
+        document.getElementById("longitude").value =
+        position.coords.longitude;
+
+        alert("✅ Shop Location Captured");
+
+    },function(){
+
+        alert("Location Permission Denied");
+
+    });
+
+}
+
 
 </script>
 </body>
