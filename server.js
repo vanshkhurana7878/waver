@@ -299,14 +299,13 @@ app.get("/test", async (req, res) => {
 //-----------------Database------------------
 app.get("/barbers", async (req, res) => {
 
-const city = req.session.userCity;
+
 
 
     const { data, error } = await supabase
         .from("user")
-        .select("*")
-        .eq("city", city);
-
+        .select("*");
+        
 
     if (error) {
         console.log(error);
