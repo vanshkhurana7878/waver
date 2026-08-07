@@ -102,5 +102,39 @@
 
 </div>
 
+<script>
+
+async function getUserCity() {
+
+    if (!navigator.geolocation) return;
+
+    navigator.geolocation.getCurrentPosition(async function(position) {
+
+        const lat = position.coords.latitude;
+        const lon = position.coords.longitude;
+
+        const response = await fetch(
+            `https://nominatim.openstreetmap.org/reverse?format=json&lat=${lat}&lon=${lon}`
+        );
+
+        const data = await response.json();
+
+        const city =
+            data.address.city ||
+            data.address.town ||
+            data.address.village;
+
+        localStorage.setItem("user_city", city);
+
+        console.log("User City:", city);
+
+    });
+
+}
+
+getUserCity();
+
+</script>
+
 </body>
 </html>
