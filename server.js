@@ -299,9 +299,14 @@ app.get("/test", async (req, res) => {
 //-----------------Database------------------
 app.get("/barbers", async (req, res) => {
 
+const city = req.session.userCity;
+
+
     const { data, error } = await supabase
         .from("user")
-        .select("*");
+        .select("*")
+        .eq("city", city);
+
 
     if (error) {
         console.log(error);
