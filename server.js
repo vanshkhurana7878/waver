@@ -190,6 +190,21 @@ app.post("/save-fcm-token", async (req, res) => {
     });
 
 });
+//
+app.post("/save-user-city", (req, res) => {
+
+    req.session.userCity = req.body.city;
+
+    console.log("User City Saved:", req.body.city);
+
+    res.json({
+        success: true
+    });
+
+});
+
+
+
 //fcm mesagging testing 
 app.post("/send-notification", async (req, res) => {
 
