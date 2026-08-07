@@ -128,6 +128,16 @@ async function getUserCity() {
 
         console.log("User City:", city);
 
+        await fetch("/save-user-city", {
+    method: "POST",
+    headers: {
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({
+        city: city
+    })
+});
+
     });
 
 }
