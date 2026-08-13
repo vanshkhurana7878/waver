@@ -708,6 +708,16 @@ app.post("/admin-login", (req, res) => {
     });
 
 });
+
+function requireAdmin(req, res, next) {
+
+    if (!req.session.isAdmin) {
+        return res.redirect("/admin-login");
+    }
+
+    next();
+}
+
 // ---------------- BOOKING HISTORY ----------------
 
 app.get("/booking-history", async (req, res) => {
