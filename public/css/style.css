@@ -10,14 +10,7 @@ background:#000;
 color:white;
 }
 
-nav{
-display:flex;
-justify-content:space-between;
-align-items:center;
-padding:18px 50px;
-background:#000;
-border-bottom:1px solid #222;
-}
+
 
 nav ul{
 display:flex;
@@ -67,10 +60,10 @@ cursor:pointer;
 background:#D4AF37;
 color:white;
 }
-.logo{
-    width:160px;
-    height:auto;
-}
+
+
+
+
 .barber-img{
     width:100px;
     height:100px;
@@ -266,4 +259,94 @@ color:white;
 
 .ad-video video {
     height: 220px;
+}
+nav {
+    width: 100%;
+    height: 250px;
+    background: #000;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 0 55px;
+    box-sizing: border-box;
+
+    border-bottom: 1px solid #222;
+
+    position: relative;
+}
+
+/* LEFT LOGO */
+
+.nav-left {
+    width: 180px;
+    display: flex;
+    align-items: center;
+}
+
+.logo {
+    width: 110px;
+    height: auto;
+}
+
+
+/* CENTER VIDEO */
+
+.nav-ad {
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 52%;
+    max-width: 800px;
+    height: 210px;
+
+    overflow: hidden;
+    background: #080808;
+}
+
+.nav-ad video {
+    width: 100%;
+    height: 100%;
+
+    display: block;
+
+    object-fit: cover;
+}
+
+
+/* RIGHT MENU */
+
+.nav-menu {
+    width: 180px;
+
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+
+    gap: 32px;
+
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+
+.nav-menu li,
+.nav-menu a {
+    color: white;
+    text-decoration: none;
+
+    font-family: Arial, sans-serif;
+    font-size: 17px;
+
+    cursor: pointer;
+}
+
+.nav-menu a:hover,
+.nav-menu li:hover {
+    color: #c9a84c;
 }
