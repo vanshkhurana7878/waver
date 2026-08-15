@@ -260,16 +260,10 @@ color:white;
 
 }
 .ad-video {
-    width: 100%;
-    max-width: 1200px;
-    margin: 30px auto;
-    overflow: hidden;
-    border-radius: 15px;
+    width: 55%;
+    max-width: 650px;
 }
 
 .ad-video video {
-    width: 100%;
-    display: block;
-    max-height: 500px;
-    object-fit: cover;
+    height: 220px;
 }
