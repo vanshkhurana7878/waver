@@ -350,3 +350,179 @@ nav {
 .nav-menu li:hover {
     color: #c9a84c;
 }
+
+/* =========================================
+   WAVER PREMIUM FOOTER
+========================================= */
+
+.waver-footer {
+    background: #080707;
+    color: #f0ead6;
+    border-top: 1px solid rgba(201, 168, 76, 0.18);
+    margin-top: 80px;
+}
+
+
+/* MAIN FOOTER */
+
+.footer-container {
+    width: 90%;
+    max-width: 1250px;
+    margin: auto;
+
+    padding: 70px 0 55px;
+
+    display: grid;
+    grid-template-columns:
+        1.4fr
+        1fr
+        1.2fr
+        1.1fr;
+
+    gap: 60px;
+}
+
+
+/* BRAND */
+
+.footer-brand img {
+    width: 105px;
+    height: auto;
+    margin-bottom: 15px;
+}
+
+.footer-brand h2 {
+    margin: 0 0 15px;
+
+    font-size: 25px;
+    letter-spacing: 5px;
+
+    color: #c9a84c;
+}
+
+.footer-brand p {
+    max-width: 280px;
+
+    color: #8a7f6e;
+    line-height: 1.8;
+    font-size: 14px;
+}
+
+
+/* COLUMNS */
+
+.footer-column {
+    display: flex;
+    flex-direction: column;
+    gap: 13px;
+}
+
+.footer-column h3 {
+    margin: 0 0 15px;
+
+    font-size: 17px;
+    color: #f5e27e;
+
+    letter-spacing: 1px;
+}
+
+.footer-column a {
+    color: #aaa;
+    text-decoration: none;
+
+    font-size: 14px;
+
+    transition: 0.3s;
+}
+
+.footer-column a:hover {
+    color: #c9a84c;
+    transform: translateX(4px);
+}
+
+.footer-column p {
+    margin: 0;
+
+    color: #aaa;
+    font-size: 14px;
+    line-height: 1.6;
+}
+
+
+/* GOLD LINE */
+
+.footer-bottom {
+    width: 90%;
+    max-width: 1250px;
+
+    margin: auto;
+
+    padding: 25px 0;
+
+    border-top: 1px solid rgba(201, 168, 76, 0.15);
+
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.footer-bottom p {
+    margin: 0;
+
+    color: #6f685c;
+    font-size: 13px;
+}
+
+.footer-bottom-links {
+    display: flex;
+    gap: 25px;
+}
+
+.footer-bottom-links a {
+    color: #8a7f6e;
+    text-decoration: none;
+
+    font-size: 13px;
+
+    transition: 0.3s;
+}
+
+.footer-bottom-links a:hover {
+    color: #c9a84c;
+}
+
+
+/* =========================================
+   MOBILE
+========================================= */
+
+@media (max-width: 800px) {
+
+    .footer-container {
+        grid-template-columns: 1fr 1fr;
+        gap: 45px 30px;
+    }
+
+}
+
+
+@media (max-width: 500px) {
+
+    .footer-container {
+        grid-template-columns: 1fr;
+
+        padding: 50px 0 35px;
+    }
+
+    .footer-brand p {
+        max-width: 100%;
+    }
+
+    .footer-bottom {
+        flex-direction: column;
+        gap: 15px;
+        text-align: center;
+    }
+
+}
+
