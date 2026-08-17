@@ -121,51 +121,95 @@
 </a>
     </div>
 
-    <!-- EMAIL OTP SCRIPT -->
-    <script>
-        // SEND OTP
-        async function sendOTP() {
-            let email = document.getElementById("email").value;
+    
+<script type="module">
 
-            if (!email) {
-                alert("Please enter email");
-                return;
-            }
+import { createClient } from "https://esm.sh/@supabase/supabase-js@2";
 
-            await fetch("/send-email-otp", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email })
-            });
+const supabase = createClient(
+    "https://jnupyibeedhzwdqcxtnf.supabase.co",
+    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImpudXB5aWJlZWRoendkcWN4dG5mIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODMwNTQxODcsImV4cCI6MjA5ODYzMDE4N30.LudlDiybkPGtGc5XAAcKiQ_ZRmE1Gj3TFzM3kg4pHew"
+);
 
-            alert("OTP Sent to Email 📩");
-        }
 
-        // VERIFY OTP
-        async function verifyOTP() {
-            let otp = document.getElementById("otp").value;
+// SEND OTP
 
-            if (!otp) {
-                alert("Please enter OTP");
-                return;
-            }
+window.sendOTP = async function () {
 
-            let res = await fetch("/verify-email-otp", {
-                method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ otp })
-            });
+    const email = document.getElementById("email").value.trim();
 
-            let data = await res.json();
+    if (!email) {
+        alert("Please enter email");
+        return;
+    }
 
-            
+    const { error } = await supabase.auth.signInWithOtp({
+        email: email
+    });
 
-            if (data.success) {
-                window.location.href = data.redirect;} else{
-                    alert("invalid otp");
-            }
-        }
-    </script>
+    if (error) {
+
+        console.log(error);
+        alert(error.message);
+        return;
+
+    }
+
+    alert("OTP Sent to Email 📩");
+
+};
+
+
+// VERIFY OTP
+
+window.verifyOTP = async function () {
+
+    const email = document.getElementById("email").value.trim();
+    const otp = document.getElementById("otp").value.trim();
+
+    if (!email || !otp) {
+
+        alert("Enter email and OTP");
+        return;
+
+    }
+
+    const { data, error } = await supabase.auth.verifyOtp({
+
+        email: email,
+        token: otp,
+        type: "email"
+
+    });
+
+    if (error) {
+
+        console.log(error);
+        alert("Invalid OTP");
+        return;
+
+    }
+
+    console.log("Logged in user:", data.user);
+    console.log("Session:", data.session);
+
+    // Save token
+    localStorage.setItem(
+        "access_token",
+        data.session.access_token
+    );
+
+    // Go to service
+    window.location.href = "/service";
+
+};
+
+</script>
+
+
+
+
+
 <!-- WhatsApp Floating Button -->
 <a href="https://wa.me/919056937529?text=Hi%20I%20want%20to%20contact%20you"
    target="_blank"
