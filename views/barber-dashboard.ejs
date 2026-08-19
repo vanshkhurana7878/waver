@@ -282,6 +282,11 @@ margin-bottom:10px;
 
 <nav>
 
+<div class="barber-profile-icon" onclick="toggleBarberProfile()">
+    👤
+</div>
+
+
 <img src="/images/waver.png" class="logo">
 
 </nav>
@@ -571,6 +576,54 @@ lastBookingCount=bookings.length;
 
 </script>
 
+<script>
+function toggleBarberProfile() {
+
+    document
+        .getElementById("barberProfilePanel")
+        .classList
+        .toggle("active");
+
+}
+</script>
+
+
+<!-- Barber Profile Sidebar -->
+<div id="barberProfilePanel" class="barber-profile-panel">
+
+    <button class="barber-close-btn" onclick="toggleBarberProfile()">
+        ×
+    </button>
+
+    <div class="barber-profile-header">
+
+        <div class="barber-avatar">
+            👤
+        </div>
+
+        <h2>Barber Profile</h2>
+
+        <p id="barberName">Welcome, Barber</p>
+
+    </div>
+
+    <hr>
+
+    <a href="#">👤 My Profile</a>
+
+    <a href="#">🏪 Shop Details</a>
+
+    <a href="#">📅 My Bookings</a>
+
+    <a href="#">🔔 Notifications</a>
+
+    <a href="#">⚙️ Settings</a>
+
+    <a href="#">📞 Contact Support</a>
+
+    <a href="/barber-login">🚪 Logout</a>
+
+</div>
 
 
 </body>
