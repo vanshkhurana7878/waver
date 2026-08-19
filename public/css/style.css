@@ -526,9 +526,68 @@ nav {
 
 }
 
-.barber-profile-icon {
-    width: 45px;
-    height: 45px;
+/* BARBER PROFILE SIDEBAR */
+
+.barber-profile-panel {
+    position: fixed !important;
+    top: 0 !important;
+    right: -350px !important;
+
+    width: 320px !important;
+    height: 100vh !important;
+
+    background: #111010 !important;
+    color: white !important;
+
+    padding: 30px !important;
+    box-sizing: border-box !important;
+
+    border-left: 1px solid rgba(201,168,76,0.3);
+
+    z-index: 999999 !important;
+
+    transition: right 0.35s ease !important;
+}
+
+.barber-profile-panel.active {
+    right: 0 !important;
+}
+
+
+/* CLOSE BUTTON */
+
+.barber-close-btn {
+    position: absolute !important;
+    top: 15px !important;
+    left: 15px !important;
+
+    width: 35px !important;
+    height: 35px !important;
+
+    border: none !important;
+    border-radius: 50% !important;
+
+    background: white !important;
+    color: black !important;
+
+    font-size: 24px !important;
+    cursor: pointer !important;
+}
+
+
+/* PROFILE CONTENT */
+
+.barber-profile-header {
+    text-align: center;
+    margin-top: 35px;
+}
+
+.barber-avatar {
+    width: 80px;
+    height: 80px;
+
+    margin: auto;
+    margin-bottom: 15px;
 
     border-radius: 50%;
 
@@ -539,14 +598,24 @@ nav {
     align-items: center;
     justify-content: center;
 
-    font-size: 22px;
-    cursor: pointer;
-
-    transition: 0.3s;
+    font-size: 35px;
 }
 
-.barber-profile-icon:hover {
-    transform: scale(1.08);
-    box-shadow: 0 0 25px rgba(201, 168, 76, 0.35);
+.barber-profile-header h2 {
+    color: #c9a84c;
 }
 
+.barber-profile-panel a {
+    display: block;
+
+    color: white;
+    text-decoration: none;
+
+    padding: 15px 5px;
+
+    border-bottom: 1px solid #292929;
+}
+
+.barber-profile-panel a:hover {
+    color: #c9a84c;
+}
