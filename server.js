@@ -283,6 +283,30 @@ app.post("/barber-send-otp", async (req, res) => {
     });
 
 });
+
+app.post("/barber-verify-otp", (req, res) => {
+
+    const { otp } = req.body;
+
+    if (otp == storedOTP) {
+
+        storedOTP = null;
+
+        return res.json({
+            success: true
+        });
+
+    }
+
+    return res.json({
+        success: false,
+        message: "Invalid OTP"
+    });
+
+});
+
+
+
 //-------test
 app.get("/test", async (req, res) => {
   const { data, error } = await supabase
@@ -360,6 +384,13 @@ app.post("/create-order", async (req, res) => {
     }
 
 });
+
+//------------about us 
+app.get("/about", (req, res) => {
+    res.render("about");
+});
+
+
 
 // ---------------- BOOKING CREATE ----------------
 
