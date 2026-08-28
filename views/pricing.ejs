@@ -105,86 +105,7 @@
 </div>
 
 
-<!-- ================= TIME SLOT SECTION ================= -->
 
-<div class="slot-section">
-
-    <h2>Select Date</h2>
-
-    <input type="date" id="bookingDate">
-
-
-    <h2 class="slot-title">Select Time</h2>
-
-    <div class="time-slots" id="timeSlots">
-
-        <button type="button" class="time-slot">9:00 AM</button>
-        <button type="button" class="time-slot">9:15 AM</button>
-        <button type="button" class="time-slot">9:30 AM</button>
-        <button type="button" class="time-slot">9:45 AM</button>
-
-        <button type="button" class="time-slot">10:00 AM</button>
-        <button type="button" class="time-slot">10:15 AM</button>
-        <button type="button" class="time-slot">10:30 AM</button>
-        <button type="button" class="time-slot">10:45 AM</button>
-
-        <button type="button" class="time-slot">11:00 AM</button>
-        <button type="button" class="time-slot">11:15 AM</button>
-        <button type="button" class="time-slot">11:30 AM</button>
-        <button type="button" class="time-slot">11:45 AM</button>
-
-        <button type="button" class="time-slot">12:00 PM</button>
-        <button type="button" class="time-slot">12:15 PM</button>
-        <button type="button" class="time-slot">12:30 PM</button>
-        <button type="button" class="time-slot">12:45 PM</button>
-
-        <button type="button" class="time-slot">1:00 PM</button>
-        <button type="button" class="time-slot">1:15 PM</button>
-        <button type="button" class="time-slot">1:30 PM</button>
-        <button type="button" class="time-slot">1:45 PM</button>
-
-        <button type="button" class="time-slot">2:00 PM</button>
-        <button type="button" class="time-slot">2:15 PM</button>
-        <button type="button" class="time-slot">2:30 PM</button>
-        <button type="button" class="time-slot">2:45 PM</button>
-
-        <button type="button" class="time-slot">3:00 PM</button>
-        <button type="button" class="time-slot">3:15 PM</button>
-        <button type="button" class="time-slot">3:30 PM</button>
-        <button type="button" class="time-slot">3:45 PM</button>
-
-        <button type="button" class="time-slot">4:00 PM</button>
-        <button type="button" class="time-slot">4:15 PM</button>
-        <button type="button" class="time-slot">4:30 PM</button>
-        <button type="button" class="time-slot">4:45 PM</button>
-
-        <button type="button" class="time-slot">5:00 PM</button>
-        <button type="button" class="time-slot">5:15 PM</button>
-        <button type="button" class="time-slot">5:30 PM</button>
-        <button type="button" class="time-slot">5:45 PM</button>
-
-        <button type="button" class="time-slot">6:00 PM</button>
-        <button type="button" class="time-slot">6:15 PM</button>
-        <button type="button" class="time-slot">6:30 PM</button>
-        <button type="button" class="time-slot">6:45 PM</button>
-
-        <button type="button" class="time-slot">7:00 PM</button>
-        <button type="button" class="time-slot">7:15 PM</button>
-        <button type="button" class="time-slot">7:30 PM</button>
-        <button type="button" class="time-slot">7:45 PM</button>
-
-        <button type="button" class="time-slot">8:00 PM</button>
-        <button type="button" class="time-slot">8:15 PM</button>
-        <button type="button" class="time-slot">8:30 PM</button>
-        <button type="button" class="time-slot">8:45 PM</button>
-
-    </div>
-
-    <p id="selectedTime">
-        No time selected
-    </p>
-
-</div>
 
 
 <!-- BOTTOM BAR -->
@@ -352,39 +273,6 @@ window.location.href = "/confirmation/" + data.bookingId;
     rzp.open();
 
 }
-
-    // ================= TIME SLOT SELECTION =================
-
-let selectedTime = null;
-
-const timeSlots = document.querySelectorAll(".time-slot");
-const selectedTimeText = document.getElementById("selectedTime");
-
-timeSlots.forEach(slot => {
-
-    slot.addEventListener("click", function(){
-
-        // booked slot ko select nahi karna
-        if(this.classList.contains("booked")){
-            return;
-        }
-
-        // pehle selected slot remove
-        timeSlots.forEach(s => {
-            s.classList.remove("selected");
-        });
-
-        // current slot select
-        this.classList.add("selected");
-
-        selectedTime = this.innerText;
-
-        selectedTimeText.innerText =
-            "Selected Time: " + selectedTime;
-
-    });
-
-});
 
 
 </script>
