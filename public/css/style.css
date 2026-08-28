@@ -641,3 +641,83 @@ nav {
     color:#c9a84c;
     padding-left:10px;
 }
+
+/* ================= TIME SLOTS ================= */
+
+.slot-section{
+    margin:40px 0 180px;
+    text-align:center;
+}
+
+.slot-section h2{
+    margin-bottom:15px;
+}
+
+#bookingDate{
+    padding:14px 20px;
+    border-radius:10px;
+    border:1px solid #444;
+    background:#111;
+    color:white;
+    font-size:16px;
+}
+
+.slot-title{
+    margin-top:35px;
+}
+
+.time-slots{
+    display:grid;
+    grid-template-columns:repeat(4, 1fr);
+    gap:15px;
+    margin-top:20px;
+}
+
+.time-slot{
+    width:100%;
+    padding:16px 8px;
+    border-radius:12px;
+    border:1px solid #444;
+    background:#111;
+    color:white;
+    font-size:15px;
+    cursor:pointer;
+    transition:0.25s;
+}
+
+.time-slot:hover{
+    border-color:#D4AF37;
+    color:#D4AF37;
+    transform:translateY(-2px);
+}
+
+.time-slot.selected{
+    background:#D4AF37;
+    color:#000;
+    border-color:#D4AF37;
+}
+
+.time-slot.booked{
+    background:#292929;
+    color:#666;
+    border-color:#333;
+    cursor:not-allowed;
+}
+
+#selectedTime{
+    margin-top:20px;
+    color:#D4AF37;
+    font-weight:bold;
+}
+
+
+/* MOBILE */
+
+@media(max-width:600px){
+
+    .time-slots{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+}
+
