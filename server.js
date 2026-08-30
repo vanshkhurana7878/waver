@@ -825,6 +825,62 @@ app.get("/admin/users", async (req,res)=>{
     });
 
 });
+
+
+// ================= GOOGLE SEO =================
+
+// robots.txt
+app.get("/robots.txt", (req, res) => {
+    res.type("text/plain");
+
+    res.send(`User-agent: *
+Allow: /
+
+Sitemap: https://waver.co.in/sitemap.xml
+`);
+});
+
+
+// sitemap.xml
+app.get("/sitemap.xml", (req, res) => {
+    res.type("application/xml");
+
+    res.send(`<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+
+    <url>
+        <loc>https://waver.co.in/</loc>
+    </url>
+
+    <url>
+        <loc>https://waver.co.in/login</loc>
+    </url>
+
+    <url>
+        <loc>https://waver.co.in/service</loc>
+    </url>
+
+    <url>
+        <loc>https://waver.co.in/barbers</loc>
+    </url>
+
+    <url>
+        <loc>https://waver.co.in/about</loc>
+    </url>
+
+    <url>
+        <loc>https://waver.co.in/term</loc>
+    </url>
+
+    <url>
+        <loc>https://waver.co.in/contactus</loc>
+    </url>
+
+</urlset>`);
+});
+
+
+
 //admin barbers
 app.get("/admin/barbers", async (req, res) => {
 
